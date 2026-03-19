@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Daily Personal Scripture - MFMCF MEDILAG</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- html2canvas for image download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -55,6 +57,7 @@
         .logo img {
             height: 40px;
             width: auto;
+            display: block;
         }
 
         .logo span {
@@ -191,6 +194,11 @@
             border-color: #fff;
         }
 
+        .theme-btn.classic.active { background: linear-gradient(135deg, #A020F0, #4a2c5f); }
+        .theme-btn.elegant.active { background: linear-gradient(135deg, #daa520, #b8860b); }
+        .theme-btn.modern.active { background: linear-gradient(135deg, #2c3e50, #3498db); }
+        .theme-btn.nature.active { background: linear-gradient(135deg, #2e7d32, #81c784); }
+
         /* Generator Container */
         .generator-container {
             display: grid;
@@ -259,7 +267,9 @@
             justify-content: center;
         }
 
-        /* ===== SIMPLE CARD STYLES ===== */
+        /* ===== CARD THEMES ===== */
+        
+        /* Base Card Styles */
         .scripture-card-personal {
             background: white;
             border-radius: 24px;
@@ -268,17 +278,167 @@
             font-family: 'Poppins', sans-serif;
             position: relative;
             width: 100%;
-            max-width: 380px;
+            max-width: 400px;
             margin: 0 auto;
+            transition: all 0.3s ease;
         }
 
+        /* THEME 1: CLASSIC */
+        .theme-classic {
+            background: white;
+            border: 1px solid rgba(160, 32, 240, 0.2);
+        }
+        .theme-classic .daily-badge {
+            background: linear-gradient(135deg, #A020F0, #4a2c5f);
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .theme-classic .fellowship-name {
+            color: #1a2b4c;
+        }
+        .theme-classic .message-box {
+            background: linear-gradient(135deg, rgba(160, 32, 240, 0.05), rgba(74, 44, 95, 0.05));
+        }
+
+        /* THEME 2: ELEGANT */
+        .theme-elegant {
+            background: linear-gradient(135deg, #fff9e6, #fff);
+            border: 2px solid #daa520;
+            position: relative;
+        }
+        .theme-elegant::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #daa520;
+            border-radius: 16px;
+            pointer-events: none;
+        }
+        .theme-elegant .daily-badge {
+            background: linear-gradient(135deg, #daa520, #b8860b);
+            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+        .theme-elegant .fellowship-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: #b8860b;
+        }
+        .theme-elegant .message-box {
+            background: rgba(218, 165, 32, 0.05);
+            border: 1px solid rgba(218, 165, 32, 0.2);
+        }
+        .theme-elegant .scripture-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+        }
+
+        /* THEME 3: MODERN */
+        .theme-modern {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            border: none;
+            color: white;
+        }
+        .theme-modern .daily-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .theme-modern .fellowship-name {
+            color: white;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        .theme-modern .subtitle {
+            color: rgba(255,255,255,0.9);
+        }
+        .theme-modern .message-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .theme-modern .scripture-text {
+            color: white;
+            font-weight: 300;
+        }
+        .theme-modern .scripture-verse {
+            color: rgba(255,255,255,0.8);
+            border-top-color: rgba(255,255,255,0.3);
+        }
+        .theme-modern .date-stamp {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .theme-modern .date-stamp i {
+            color: white;
+        }
+
+        /* THEME 4: NATURE */
+        .theme-nature {
+            background: linear-gradient(135deg, #2e7d32, #81c784);
+            border: none;
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+        .theme-nature::before {
+            content: '🌿🌱🍃';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-size: 40px;
+            opacity: 0.1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-10deg);
+            pointer-events: none;
+        }
+        .theme-nature .daily-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .theme-nature .fellowship-name {
+            color: white;
+        }
+        .theme-nature .subtitle {
+            color: rgba(255,255,255,0.9);
+        }
+        .theme-nature .message-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+        }
+        .theme-nature .scripture-text {
+            color: white;
+        }
+        .theme-nature .scripture-verse {
+            color: rgba(255,255,255,0.9);
+            border-top-color: rgba(255,255,255,0.3);
+        }
+        .theme-nature .date-stamp {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        .theme-nature .date-stamp i {
+            color: white;
+        }
+
+        /* Common Card Elements */
         .daily-badge {
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            color: white;
             padding: 6px 20px;
             border-radius: 30px;
             font-size: 0.8rem;
@@ -286,12 +446,13 @@
             letter-spacing: 1px;
             white-space: nowrap;
             z-index: 10;
-            box-shadow: 0 4px 10px rgba(160, 32, 240, 0.2);
+            color: white;
         }
 
         .card-header {
             text-align: center;
-            margin: 25px 0 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .logo-title {
@@ -300,32 +461,33 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 8px;
+            flex-wrap: wrap;
         }
 
         .card-logo {
             width: 45px;
             height: 45px;
             object-fit: contain;
+            display: block;
         }
 
         .fellowship-name {
-            color: #1a2b4c;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin: 0;
+            line-height: 1.2;
         }
 
         .subtitle {
-            color: #4a2c5f;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             line-height: 1.4;
             opacity: 0.9;
+            padding: 0 10px;
         }
 
         .message-box {
-            background: linear-gradient(135deg, rgba(160, 32, 240, 0.05), rgba(74, 44, 95, 0.05));
-            border-radius: 16px;
-            padding: 25px 20px;
+            border-radius: 20px;
+            padding: 25px 15px;
             margin: 20px 0;
             text-align: center;
         }
@@ -333,18 +495,18 @@
         .scripture-text {
             font-size: 1.2rem;
             line-height: 1.6;
-            color: #1a2b4c;
             font-weight: 600;
             margin-bottom: 12px;
             font-family: 'Playfair Display', serif;
+            word-break: break-word;
         }
 
         .scripture-verse {
-            color: #4a2c5f;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            border-top: 1px dashed rgba(160, 32, 240, 0.3);
+            border-top: 1px dashed rgba(0,0,0,0.1);
             padding-top: 12px;
+            margin-top: 5px;
         }
 
         .date-stamp {
@@ -352,13 +514,12 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            color: #888;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             background: #f8f9fa;
             padding: 8px 16px;
-            border-radius: 30px;
+            border-radius: 40px;
             width: fit-content;
-            margin: 5px auto 0;
+            margin: 0 auto;
         }
 
         .date-stamp i {
@@ -382,10 +543,11 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            flex: 0 1 auto;
             min-width: 160px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
@@ -701,7 +863,8 @@
             { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
             { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
             { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
-        
+            { text: "you will mount up with wings like eagles", verse: "Isaiah 40:31" },
+            { text: "the Lord will fight for you", verse: "Exodus 14:14" },
 
     // God Goes Before You
     { text: "God goes before you into every exam and every challenge", verse: "Deuteronomy 31:8" },
@@ -922,6 +1085,7 @@
     { text: "let God's word be the foundation beneath all your knowledge", verse: "Matthew 7:24" },
     { text: "you succeed in school and in spirit, for God blesses both", verse: "3 John 1:2" },
     { text: "you are a living testimony of what God can do with a willing student", verse: "1 Timothy 4:15" },
+
     // Help & Strength
     { text: "you are helped by God", verse: "Psalm 121:2" },
     { text: "the Lord is your helper", verse: "Hebrews 13:6" },
@@ -1106,15 +1270,13 @@
             }
         }
 
-        // Generate card
+        // Generate card with theme
         function generateCard(name) {
             const scripture = getDailyScripture(name);
             const today = getTodayDate();
             
-            let themeStyles = '';
-            
             document.getElementById('generatedCard').innerHTML = `
-                <div class="scripture-card-personal" id="cardToDownload">
+                <div class="scripture-card-personal theme-${currentTheme}" id="cardToDownload">
                     <div class="daily-badge">TODAY'S WORD</div>
                     
                     <div class="card-header">
@@ -1145,7 +1307,7 @@
             const today = getTodayDate();
             
             document.getElementById('generatedCard').innerHTML = `
-                <div class="scripture-card-personal" style="opacity:0.9;">
+                <div class="scripture-card-personal theme-${currentTheme}" style="opacity:0.9;">
                     <div class="daily-badge">TODAY'S WORD</div>
                     
                     <div class="card-header">
@@ -1194,7 +1356,7 @@
             }
         });
 
-        // ========== SIMPLE DOWNLOAD ==========
+        // ========== DOWNLOAD BUTTON ==========
         document.getElementById('downloadCardBtn').addEventListener('click', function() {
             const card = document.getElementById('cardToDownload');
             if (!card) {
@@ -1207,10 +1369,13 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
             btn.disabled = true;
             
+            // Use higher scale for better quality
             html2canvas(card, {
-                scale: 2,
+                scale: 3,
                 backgroundColor: '#ffffff',
-                logging: false
+                logging: false,
+                allowTaint: true,
+                useCORS: true
             }).then(canvas => {
                 const link = document.createElement('a');
                 const name = document.getElementById('userName').value.trim() || 'Your';
@@ -1228,7 +1393,7 @@
             });
         });
 
-        // ========== SIMPLE SHARE ==========
+        // ========== SHARE BUTTON ==========
         document.getElementById('shareCardBtn').addEventListener('click', function() {
             const name = document.getElementById('userName').value.trim();
             if (!name) {
@@ -1245,18 +1410,22 @@
             btn.disabled = true;
             
             html2canvas(card, {
-                scale: 2,
+                scale: 3,
                 backgroundColor: '#ffffff',
-                logging: false
+                logging: false,
+                allowTaint: true,
+                useCORS: true
             }).then(canvas => {
                 canvas.toBlob(function(blob) {
                     const file = new File([blob], `MFMCF-${name}-Daily-Word.png`, { type: 'image/png' });
                     
-                    if (navigator.share && navigator.canShare({ files: [file] })) {
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                         navigator.share({
                             files: [file],
-                            title: `Daily Word for ${name}`
+                            title: `Daily Word for ${name}`,
+                            text: `My daily word from MFMCF MEDILAG`
                         }).catch(() => {
+                            // Fallback to download
                             const link = document.createElement('a');
                             link.download = `MFMCF-${name}-Daily-Word.png`;
                             link.href = canvas.toDataURL('image/png');
@@ -1266,6 +1435,7 @@
                             btn.disabled = false;
                         });
                     } else {
+                        // Fallback to download
                         const link = document.createElement('a');
                         link.download = `MFMCF-${name}-Daily-Word.png`;
                         link.href = canvas.toDataURL('image/png');
@@ -1273,10 +1443,10 @@
                         btn.innerHTML = originalText;
                         btn.disabled = false;
                     }
-                });
+                }, 'image/png');
             }).catch(error => {
                 console.error('Error:', error);
-                alert('Share failed. Please try again.');
+                fallbackToTextShare(name);
                 btn.innerHTML = originalText;
                 btn.disabled = false;
             });
@@ -1299,9 +1469,11 @@
             btn.disabled = true;
             
             html2canvas(card, {
-                scale: 2,
+                scale: 3,
                 backgroundColor: '#ffffff',
-                logging: false
+                logging: false,
+                allowTaint: true,
+                useCORS: true
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `MFMCF-${name}-Instagram-Story.png`;
@@ -1339,9 +1511,11 @@
             btn.disabled = true;
             
             html2canvas(card, {
-                scale: 2,
+                scale: 3,
                 backgroundColor: '#ffffff',
-                logging: false
+                logging: false,
+                allowTaint: true,
+                useCORS: true
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `MFMCF-${name}-WhatsApp-Story.png`;
@@ -1361,6 +1535,34 @@
                 btn.disabled = false;
             });
         });
+
+        // Fallback text share
+        function fallbackToTextShare(name) {
+            const scriptureText = document.querySelector('.scripture-text')?.textContent || '';
+            const verseText = document.querySelector('.scripture-verse')?.textContent || '';
+            const today = getTodayDate();
+            
+            const message = `✨ DAILY WORD FOR ${name.toUpperCase()} ✨\n📅 ${today}\n\n“${scriptureText}”\n${verseText}\n\nFrom MFMCF MEDILAG`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: `Daily Word for ${name}`,
+                    text: message,
+                }).catch(() => {
+                    copyToClipboard(message);
+                });
+            } else {
+                copyToClipboard(message);
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✨ Daily word copied to clipboard!');
+            }).catch(() => {
+                prompt('Copy this message:', text);
+            });
+        }
     </script>
 </body>
 </html>
