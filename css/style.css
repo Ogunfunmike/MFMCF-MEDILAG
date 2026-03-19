@@ -1504,3 +1504,41 @@ footer {
         font-size: 0.95rem;
     }
 }
+
+/* Ensure the card renders crisply */
+.scripture-card-personal {
+    background: white;
+    border-radius: 24px;
+    padding: 40px 25px 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    border: 1px solid rgba(160, 32, 240, 0.2);
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    width: 100%;
+    max-width: 450px;  /* Slightly larger max-width */
+    margin: 0 auto;
+    image-rendering: -webkit-optimize-contrast;  /* Sharper rendering */
+    image-rendering: crisp-edges;
+}
+
+/* Ensure text is sharp */
+.scripture-text {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: #1a2b4c;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Logo should be crisp */
+.card-logo {
+    width: 50px;  /* Slightly larger */
+    height: 50px;
+    object-fit: contain;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+}
