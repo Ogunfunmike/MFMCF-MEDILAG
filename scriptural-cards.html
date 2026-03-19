@@ -1,1077 +1,693 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Personal Scripture - MFMCF MEDILAG</title>
-     <link rel="icon" type="image/png" href="20241125_233804.png">
-    <link rel="shortcut icon" type="image/png" href="20241125_233804.png">
-    <link rel="stylesheet" href="css/style.css">
-    <!-- For modern browsers -->
-<link rel="icon" type="image/png" sizes="32x32" href="20241125_233804.png">
-<link rel="icon" type="image/png" sizes="16x16" href="20241125_233804.png">
+<style>
+    /* Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-<!-- For Apple devices -->
-<link rel="apple-touch-icon" href="20241125_233804.png">
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #f5f5f5;
+    }
 
-<!-- For IE/Edge -->
-<meta name="msapplication-TileImage" content="20241125_233804.png">
-<meta name="msapplication-TileColor" content="#4a2c5f">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <!-- html2canvas for image download -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Navigation */
+    .navbar {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 70px;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo img {
+        height: 40px;
+        width: auto;
+        display: block;
+    }
+
+    .logo span {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1a2b4c;
+    }
+
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 0.5rem;
+    }
+
+    .nav-menu li a {
+        color: #333;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 8px 12px;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .nav-menu li a:hover,
+    .nav-menu li a.active {
+        background: linear-gradient(135deg, #A020F0, #4a2c5f);
+        color: white;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: #1a2b4c;
+        margin: 2px 0;
+        transition: 0.3s;
+    }
+
+    /* Hero Section */
+    .cards-hero {
+        background: linear-gradient(135deg, #A020F0, #4a2c5f);
+        padding: 100px 0 50px;
+        text-align: center;
+        color: white;
+    }
+
+    .cards-hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 0.8rem;
+        padding: 0 15px;
+    }
+
+    .cards-hero p {
+        font-size: 1rem;
+        padding: 0 20px;
+        opacity: 0.9;
+    }
+
+    /* Generator Container */
+    .generator-container {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 30px;
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(160, 32, 240, 0.1);
+        margin: 30px 0;
+    }
+
+    .input-section {
+        padding-right: 20px;
+        border-right: 2px solid rgba(160, 32, 240, 0.1);
+    }
+
+    .input-section h2 {
+        color: #1a2b4c;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .input-section p {
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        margin: 12px 0 15px;
+        font-size: 1rem;
+    }
+
+    .btn-generate {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, #A020F0, #4a2c5f);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-generate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(160, 32, 240, 0.3);
+    }
+
+    /* Card Preview */
+    .card-preview-container {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 15px;
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* CARD STYLES */
+    .scripture-card-personal {
+        background: white;
+        border-radius: 24px;
+        padding: 40px 20px 25px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        border: 1px solid rgba(160, 32, 240, 0.2);
+        font-family: 'Poppins', sans-serif;
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+    }
+
+    .daily-badge {
+        position: absolute;
+        top: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #A020F0, #4a2c5f);
+        color: white;
+        padding: 6px 20px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        z-index: 10;
+        box-shadow: 0 4px 10px rgba(160, 32, 240, 0.2);
+    }
+
+    .card-header {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .logo-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+    }
+
+    .card-logo {
+        width: 45px;
+        height: 45px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .fellowship-name {
+        color: #1a2b4c;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin: 0;
+        line-height: 1.2;
+    }
+
+    .subtitle {
+        color: #4a2c5f;
+        font-size: 0.8rem;
+        line-height: 1.4;
+        opacity: 0.9;
+        padding: 0 10px;
+    }
+
+    .message-box {
+        background: linear-gradient(135deg, rgba(160, 32, 240, 0.05), rgba(74, 44, 95, 0.05));
+        border-radius: 20px;
+        padding: 25px 15px;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .scripture-text {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #1a2b4c;
+        font-weight: 600;
+        margin-bottom: 12px;
+        font-family: 'Playfair Display', serif;
+        word-break: break-word;
+    }
+
+    .scripture-verse {
+        color: #4a2c5f;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border-top: 1px dashed rgba(160, 32, 240, 0.3);
+        padding-top: 12px;
+        margin-top: 5px;
+    }
+
+    .date-stamp {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #888;
+        font-size: 0.8rem;
+        background: #f8f9fa;
+        padding: 8px 16px;
+        border-radius: 40px;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .date-stamp i {
+        color: #A020F0;
+    }
+
+    .download-options {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .btn-download, .btn-share {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        flex: 1;
+        max-width: 180px;
+    }
+
+    .btn-download {
+        background: #A020F0;
+        color: white;
+    }
+
+    .btn-download:hover {
+        background: #4a2c5f;
+        transform: translateY(-2px);
+    }
+
+    .btn-share {
+        background: #f8f9fa;
+        border: 1px solid #e9ecef;
+        color: #333;
+    }
+
+    .btn-share:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+    }
+
+    /* Popup */
+    .popup-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .popup-container {
+        background: white;
+        border-radius: 24px;
+        padding: 30px 25px;
+        max-width: 350px;
+        width: 90%;
+        text-align: center;
+        animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+        0% { transform: scale(0.9); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #A020F0, #4a2c5f);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+    }
+
+    .popup-icon i {
+        font-size: 2rem;
+        color: white;
+    }
+
+    .popup-container h3 {
+        color: #1a2b4c;
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .popup-container p {
+        color: #666;
+        margin-bottom: 25px;
+        line-height: 1.5;
+    }
+
+    .popup-close {
+        background: linear-gradient(135deg, #A020F0, #4a2c5f);
+        color: white;
+        border: none;
+        padding: 12px 35px;
+        border-radius: 50px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .popup-close:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(160, 32, 240, 0.3);
+    }
+
+    /* ===== MOBILE RESPONSIVE STYLES ===== */
+    
+    /* Tablet and small desktop */
+    @media (max-width: 992px) {
+        .generator-container {
+            grid-template-columns: 1fr;
+            gap: 30px;
+            padding: 25px;
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f5f5f5;
+        
+        .input-section {
+            border-right: none;
+            border-bottom: 2px solid rgba(160, 32, 240, 0.1);
+            padding-right: 0;
+            padding-bottom: 25px;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        
+        .cards-hero h1 {
+            font-size: 2rem;
         }
+    }
 
-        /* Navigation */
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar .container {
+    /* Mobile phones */
+    @media (max-width: 768px) {
+        .hamburger {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 70px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            display: block;
-        }
-
-        .logo span {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a2b4c;
         }
 
         .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 0.5rem;
+            position: fixed;
+            left: -100%;
+            top: 70px;
+            flex-direction: column;
+            background: white;
+            width: 100%;
+            height: calc(100vh - 70px);
+            text-align: center;
+            padding: 30px 20px;
+            transition: 0.3s;
+            gap: 15px;
+            overflow-y: auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-menu.active {
+            left: 0;
+        }
+
+        .nav-menu li {
+            width: 100%;
         }
 
         .nav-menu li a {
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
+            display: block;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 30px;
         }
 
-        .nav-menu li a:hover,
-        .nav-menu li a.active {
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            color: white;
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #1a2b4c;
-            margin: 2px 0;
-            transition: 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
-                flex-direction: column;
-                background: white;
-                width: 100%;
-                height: calc(100vh - 70px);
-                text-align: center;
-                padding: 40px 20px;
-                transition: 0.3s;
-            }
-
-            .nav-menu.active {
-                left: 0;
-            }
-        }
-
-        /* Hero Section */
         .cards-hero {
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            padding: 120px 0 60px;
-            text-align: center;
-            color: white;
+            padding: 90px 0 40px;
         }
 
         .cards-hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
         }
 
-        /* Generator Container */
+        .cards-hero p {
+            font-size: 0.95rem;
+            padding: 0 15px;
+        }
+
         .generator-container {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 30px;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(160, 32, 240, 0.1);
-            margin: 40px 0;
+            padding: 20px;
+            margin: 20px 0;
         }
 
-        .input-section {
-            padding-right: 20px;
-            border-right: 2px solid rgba(160, 32, 240, 0.1);
+        .input-section h2 {
+            font-size: 1.4rem;
+        }
+
+        .input-section p {
+            font-size: 0.9rem;
         }
 
         .input-group input {
-            width: 100%;
             padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            margin: 10px 0;
+            font-size: 0.95rem;
         }
 
         .btn-generate {
-            width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
 
-        .btn-generate:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(160, 32, 240, 0.3);
-        }
-
-        /* Card Preview */
+        /* Card adjustments for mobile */
         .card-preview-container {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
+            padding: 15px;
             min-height: 450px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* CARD STYLES - ONLY ONE VERSION */
         .scripture-card-personal {
-            background: white;
-            border-radius: 20px;
-            padding: 40px 25px 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border: 1px solid rgba(160, 32, 240, 0.2);
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 350px;
+            padding: 35px 15px 20px;
         }
 
         .daily-badge {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            color: white;
-            padding: 6px 20px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            white-space: nowrap;
-            z-index: 10;
-        }
-
-        .card-header {
-            text-align: center;
-            margin-top: 25px;
-            margin-bottom: 25px;
-        }
-
-        .logo-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .card-logo {
-            width: 45px;
-            height: 45px;
-            object-fit: contain;
-            display: block;
+            font-size: 0.7rem;
+            padding: 5px 15px;
         }
 
         .fellowship-name {
-            color: #1a2b4c;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin: 0;
+            font-size: 1.2rem;
         }
 
         .subtitle {
-            color: #4a2c5f;
-            font-size: 0.8rem;
-            line-height: 1.4;
-            opacity: 0.9;
-        }
-
-        .message-box {
-            background: linear-gradient(135deg, rgba(160, 32, 240, 0.05), rgba(74, 44, 95, 0.05));
-            border-radius: 15px;
-            padding: 25px 20px;
-            margin: 25px 0;
-            text-align: center;
+            font-size: 0.75rem;
         }
 
         .scripture-text {
-            font-size: 1.3rem;
-            line-height: 1.7;
-            color: #1a2b4c;
-            font-weight: 600;
-            margin-bottom: 15px;
-            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            line-height: 1.5;
         }
 
         .scripture-verse {
-            color: #4a2c5f;
-            font-size: 1rem;
-            font-weight: 600;
-            border-top: 1px dashed rgba(160, 32, 240, 0.3);
-            padding-top: 12px;
+            font-size: 0.85rem;
         }
 
         .date-stamp {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            color: #888;
-            font-size: 0.8rem;
-            background: #f8f9fa;
-            padding: 6px 15px;
-            border-radius: 30px;
-            width: fit-content;
-            margin: 0 auto;
-        }
-
-        .date-stamp i {
-            color: #A020F0;
+            font-size: 0.75rem;
+            padding: 6px 12px;
         }
 
         .download-options {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            justify-content: center;
+            flex-direction: row;
+            gap: 10px;
         }
 
         .btn-download, .btn-share {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s ease;
+            padding: 10px 16px;
+            font-size: 0.85rem;
+            max-width: none;
         }
-
-        .btn-download {
-            background: #A020F0;
-            color: white;
-        }
-
-        .btn-download:hover {
-            background: #4a2c5f;
-            transform: translateY(-2px);
-        }
-
-        .btn-share {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-        }
-
-        .btn-share:hover {
-            background: #e9ecef;
-            transform: translateY(-2px);
-        }
-
-        /* Popup */
-       /* Popup - WITH BLUR */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-    backdrop-filter: blur(5px);  /* This adds the blur effect */
-    -webkit-backdrop-filter: blur(5px); /* For Safari support */
-}
 
         .popup-container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 350px;
-            width: 90%;
-            text-align: center;
+            padding: 25px 20px;
+            width: 85%;
+        }
+
+        .popup-container h3 {
+            font-size: 1.4rem;
+        }
+    }
+
+    /* Small phones */
+    @media (max-width: 480px) {
+        .cards-hero h1 {
+            font-size: 1.6rem;
+        }
+
+        .cards-hero p {
+            font-size: 0.85rem;
+        }
+
+        .generator-container {
+            padding: 15px;
+        }
+
+        .input-section h2 {
+            font-size: 1.3rem;
+        }
+
+        .scripture-card-personal {
+            max-width: 300px;
+            padding: 30px 12px 18px;
+        }
+
+        .logo-title {
+            gap: 8px;
+        }
+
+        .card-logo {
+            width: 35px;
+            height: 35px;
+        }
+
+        .fellowship-name {
+            font-size: 1rem;
+        }
+
+        .subtitle {
+            font-size: 0.7rem;
+        }
+
+        .message-box {
+            padding: 20px 12px;
+        }
+
+        .scripture-text {
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .scripture-verse {
+            font-size: 0.8rem;
+        }
+
+        .date-stamp {
+            font-size: 0.7rem;
+            padding: 5px 10px;
+        }
+
+        .download-options {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-download, .btn-share {
+            width: 100%;
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+
+        .popup-container {
+            padding: 20px 15px;
         }
 
         .popup-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
+            width: 60px;
+            height: 60px;
         }
 
         .popup-icon i {
-            font-size: 2rem;
-            color: white;
+            font-size: 1.8rem;
+        }
+
+        .popup-container h3 {
+            font-size: 1.3rem;
+        }
+
+        .popup-container p {
+            font-size: 0.9rem;
         }
 
         .popup-close {
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            color: white;
-            border: none;
             padding: 10px 30px;
-            border-radius: 50px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .generator-container {
-                grid-template-columns: 1fr;
-            }
-            .input-section {
-                border-right: none;
-                border-bottom: 2px solid rgba(160, 32, 240, 0.1);
-                padding-right: 0;
-                padding-bottom: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Popup -->
-    <div class="popup-overlay" id="comingSoonPopup">
-        <div class="popup-container">
-            <div class="popup-icon"><i class="fas fa-hourglass-half"></i></div>
-            <h3>Coming Soon!</h3>
-            <p>We're working hard to bring you this feature. Stay tuned!</p>
-            <button class="popup-close" onclick="closePopup()">Got It</button>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" style="height:40px; width:auto; display:block;">
-                <span>MFMCF MEDILAG</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#" onclick="showComingSoon(event)">Home</a></li>
-                <li><a href="#" onclick="showComingSoon(event)">About</a></li>
-                <li><a href="#" onclick="showComingSoon(event)">Leadership</a></li>
-                <li><a href="#" onclick="showComingSoon(event)">Academics</a></li>
-                <li><a href="scriptural-cards.html" class="active">✨ Daily Word</a></li>
-            </ul>
-            <div class="hamburger"><span></span><span></span><span></span></div>
-        </div>
-    </nav>
-
-    <!-- Hero -->
-    <section class="cards-hero">
-        <div class="container">
-            <h1>🙏 Your Daily Word</h1>
-            <p>A fresh, personalized scripture just for you today</p>
-        </div>
-    </section>
-
-    <!-- Generator -->
-    <section style="padding: 40px 0;">
-        <div class="container">
-            <div class="generator-container">
-                <!-- Input -->
-                <div class="input-section">
-                    <h2>Get Your Daily Word</h2>
-                    <p>Enter your name and receive a unique scripture for today</p>
-                    
-                    <div class="daily-message" style="text-align:center; margin-bottom:20px;">
-                        <i class="fas fa-sun"></i> <span id="todayDate"></span>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>Your Name:</label>
-                        <input type="text" id="userName" value="Johnson">
-                        <button id="generateCardBtn" class="btn-generate">
-                            <i class="fas fa-wand-magic"></i> Get My Daily Word
-                        </button>
-                    </div>
-
-                    <div class="info-box" style="background:#f8f9fa; padding:10px; border-radius:10px;">
-                        <i class="fas fa-info-circle" style="color:#A020F0;"></i> 
-                        Come back tomorrow for a new word!
-                    </div>
-                </div>
-
-                <!-- Card Preview -->
-                <div>
-                    <h2>Today's Word For You</h2>
-                    <div class="card-preview-container">
-                        <div id="generatedCard" class="generated-card"></div>
-                    </div>
-
-                    <div class="download-options" id="downloadOptions" style="display: none;">
-                        <button id="downloadCardBtn" class="btn-download"><i class="fas fa-download"></i> Save Image</button>
-                        <button id="shareCardBtn" class="btn-share"><i class="fas fa-share-alt"></i> Share</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-   <script>
-    // Scripture Bank
-    const scriptureBank = [
-            // Help & Strength
-    { text: "you are helped by God", verse: "Psalm 121:2" },
-    { text: "the Lord is your helper", verse: "Hebrews 13:6" },
-    { text: "God is your refuge and strength", verse: "Psalm 46:1" },
-    { text: "you can do all things through Christ", verse: "Philippians 4:13" },
-    { text: "the Lord gives you wisdom", verse: "Proverbs 2:6" },
-    { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
-    { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
-    { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
-
-    // Wisdom & Understanding
-    { text: "if you lack wisdom, ask God who gives generously", verse: "James 1:5" },
-    { text: "the fear of the Lord is the beginning of wisdom", verse: "Proverbs 9:10" },
-    { text: "God gives you an understanding heart", verse: "1 Kings 3:12" },
-    { text: "your mind is renewed by the Spirit of God", verse: "Romans 12:2" },
-    { text: "God will instruct you and teach you the way to go", verse: "Psalm 32:8" },
-    { text: "the Lord makes your paths straight", verse: "Proverbs 3:6" },
-    { text: "you have the mind of Christ", verse: "1 Corinthians 2:16" },
-    { text: "God opens your understanding of the Scriptures", verse: "Luke 24:45" },
-    { text: "great is your peace because you are taught of the Lord", verse: "Isaiah 54:13" },
-    { text: "the Holy Spirit teaches you all things", verse: "John 14:26" },
-    { text: "God reveals deep and hidden things to you", verse: "Daniel 2:22" },
-    { text: "lean not on your own understanding", verse: "Proverbs 3:5" },
-
-    // Faith & Trust
-    { text: "faith is the substance of things hoped for", verse: "Hebrews 11:1" },
-    { text: "without faith it is impossible to please God", verse: "Hebrews 11:6" },
-    { text: "trust in the Lord with all your heart", verse: "Proverbs 3:5" },
-    { text: "your faith has made you whole", verse: "Mark 5:34" },
-    { text: "the just shall live by faith", verse: "Romans 1:17" },
-    { text: "you walk by faith and not by sight", verse: "2 Corinthians 5:7" },
-    { text: "God is faithful who has called you", verse: "1 Corinthians 1:9" },
-    { text: "nothing shall be impossible to those who believe", verse: "Mark 9:23" },
-    { text: "your faith moves mountains", verse: "Matthew 17:20" },
-    { text: "hold fast to the confession of your hope", verse: "Hebrews 10:23" },
-
-    // Love for God
-    { text: "love the Lord your God with all your heart", verse: "Matthew 22:37" },
-    { text: "God so loved the world that He gave His only Son", verse: "John 3:16" },
-    { text: "we love Him because He first loved us", verse: "1 John 4:19" },
-    { text: "nothing can separate you from the love of God", verse: "Romans 8:38-39" },
-    { text: "God's love is poured into your heart by the Holy Spirit", verse: "Romans 5:5" },
-    { text: "abide in the love of Christ", verse: "John 15:9" },
-    { text: "the love of God surpasses all knowledge", verse: "Ephesians 3:19" },
-    { text: "delight yourself in the Lord", verse: "Psalm 37:4" },
-    { text: "taste and see that the Lord is good", verse: "Psalm 34:8" },
-    { text: "draw near to God and He will draw near to you", verse: "James 4:8" },
-
-    // Academic Success & Diligence
-    { text: "whatever you do, do it heartily as unto the Lord", verse: "Colossians 3:23" },
-    { text: "the diligent hand makes rich", verse: "Proverbs 10:4" },
-    { text: "commit your works to the Lord and your plans will succeed", verse: "Proverbs 16:3" },
-    { text: "study to show yourself approved unto God", verse: "2 Timothy 2:15" },
-    { text: "Daniel had wisdom and understanding ten times better", verse: "Daniel 1:20" },
-    { text: "God gives knowledge and skill to those who seek Him", verse: "Daniel 1:17" },
-    { text: "in all your getting, get understanding", verse: "Proverbs 4:7" },
-    { text: "apply your heart to instruction", verse: "Proverbs 23:12" },
-    { text: "the plans of the diligent lead to abundance", verse: "Proverbs 21:5" },
-    { text: "God blesses the work of your hands", verse: "Deuteronomy 28:12" },
-
-    // Peace & Freedom from Anxiety
-    { text: "God has not given you a spirit of fear, but of power", verse: "2 Timothy 1:7" },
-    { text: "the peace of God guards your heart and mind", verse: "Philippians 4:7" },
-    { text: "cast all your anxiety on Him for He cares for you", verse: "1 Peter 5:7" },
-    { text: "be anxious for nothing but pray about everything", verse: "Philippians 4:6" },
-    { text: "God keeps you in perfect peace when your mind is stayed on Him", verse: "Isaiah 26:3" },
-    { text: "do not be troubled, trust in God", verse: "John 14:1" },
-    { text: "the Lord will fight for you, you need only be still", verse: "Exodus 14:14" },
-    { text: "you have peace that the world cannot give", verse: "John 14:27" },
-    { text: "come to Jesus and He will give you rest", verse: "Matthew 11:28" },
-    { text: "God is bigger than every exam and every challenge", verse: "1 John 4:4" },
-
-    // Purpose & Identity
-    { text: "you are God's workmanship created for good works", verse: "Ephesians 2:10" },
-    { text: "God has plans to give you a future and a hope", verse: "Jeremiah 29:11" },
-    { text: "you are chosen, royal, and holy", verse: "1 Peter 2:9" },
-    { text: "God knew you before you were formed in the womb", verse: "Jeremiah 1:5" },
-    { text: "you are the light of the world", verse: "Matthew 5:14" },
-    { text: "you are more than a conqueror through Christ", verse: "Romans 8:37" },
-    { text: "God's gifts and calling on your life are irrevocable", verse: "Romans 11:29" },
-    { text: "you are a new creation in Christ Jesus", verse: "2 Corinthians 5:17" },
-    { text: "God completes the good work He began in you", verse: "Philippians 1:6" },
-    { text: "you are the head and not the tail", verse: "Deuteronomy 28:13" },
-
-    // Endurance & Perseverance
-    { text: "those who wait on the Lord renew their strength", verse: "Isaiah 40:31" },
-    { text: "run with endurance the race set before you", verse: "Hebrews 12:1" },
-    { text: "do not grow weary in doing good", verse: "Galatians 6:9" },
-    { text: "you will reap a harvest if you do not give up", verse: "Galatians 6:9" },
-    { text: "God strengthens you with power through His Spirit", verse: "Ephesians 3:16" },
-    { text: "be strong and courageous, do not be afraid", verse: "Joshua 1:9" },
-    { text: "God gives power to the faint", verse: "Isaiah 40:29" },
-    { text: "the testing of your faith produces endurance", verse: "James 1:3" },
-    { text: "I press on toward the goal for the prize of God", verse: "Philippians 3:14" },
-    { text: "you have overcome because greater is He in you", verse: "1 John 4:4" },
-
-    // Prayer & Seeking God
-    { text: "seek first the kingdom of God and all things will be added", verse: "Matthew 6:33" },
-    { text: "call to God and He will answer you", verse: "Jeremiah 33:3" },
-    { text: "ask and it will be given to you", verse: "Matthew 7:7" },
-    { text: "the Lord is near to all who call on Him", verse: "Psalm 145:18" },
-    { text: "pray without ceasing", verse: "1 Thessalonians 5:17" },
-    { text: "the effective prayer of a righteous person avails much", verse: "James 5:16" },
-    { text: "God hears your prayer and your cry", verse: "Psalm 34:17" },
-    { text: "before you call, God will answer", verse: "Isaiah 65:24" },
-    { text: "in the morning lay your requests before God", verse: "Psalm 5:3" },
-    { text: "delight in the Lord and He will give you the desires of your heart", verse: "Psalm 37:4" },
-
-    // God's Word & Guidance
-    { text: "God's word is a lamp to your feet and a light to your path", verse: "Psalm 119:105" },
-    { text: "God's word does not return to Him void", verse: "Isaiah 55:11" },
-    { text: "meditate on God's word day and night", verse: "Joshua 1:8" },
-    { text: "the word of God is living and active", verse: "Hebrews 4:12" },
-    { text: "hide God's word in your heart", verse: "Psalm 119:11" },
-    { text: "your steps are ordered by the Lord", verse: "Psalm 37:23" },
-    { text: "God guards the paths of the just", verse: "Proverbs 2:8" },
-    { text: "acknowledge God in all your ways and He directs your path", verse: "Proverbs 3:6" },
-    { text: "the entrance of God's word gives light", verse: "Psalm 119:130" },
-    { text: "God's Word keeps you from stumbling", verse: "Psalm 119:165" },
-    { text: "you are helped by God", verse: "Psalm 121:2" },
-            { text: "the Lord is your helper", verse: "Hebrews 13:6" },
-            { text: "God is your refuge and strength", verse: "Psalm 46:1" },
-            { text: "you can do all things through Christ", verse: "Philippians 4:13" },
-            { text: "the Lord gives you wisdom", verse: "Proverbs 2:6" },
-            { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
-            { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
-            { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
-    // Calm Before & During Exams
-    { text: "you are not confused, for God is not the author of confusion", verse: "1 Corinthians 14:33" },
-    { text: "the Spirit of God gives you a sound mind", verse: "2 Timothy 1:7" },
-    { text: "do not be afraid, for God is with you in that exam hall", verse: "Isaiah 41:10" },
-    { text: "God has not given you a spirit of fear before this paper", verse: "2 Timothy 1:7" },
-    { text: "you shall not be put to shame, for God is your confidence", verse: "Psalm 25:3" },
-    { text: "the peace of God quiets every anxious thought in your mind", verse: "Philippians 4:7" },
-    { text: "you are still and you know that He is God", verse: "Psalm 46:10" },
-    { text: "God stills the storm in your mind to a whisper", verse: "Psalm 107:29" },
-    { text: "your heart is fixed and trusting in the Lord", verse: "Psalm 112:7" },
-    { text: "this exam cannot shake you, for you stand on solid ground", verse: "Matthew 7:25" },
-
-    // Recall & Retention
-    { text: "the Holy Spirit brings all things to your remembrance", verse: "John 14:26" },
-    { text: "God restores what you have learned and need to recall", verse: "Joel 2:25" },
-    { text: "your memory is sharp, for God renews your mind", verse: "Romans 12:2" },
-    { text: "what you have studied is sealed in your heart by the Spirit", verse: "John 6:27" },
-    { text: "God causes your mind to retain knowledge at the right time", verse: "Proverbs 2:1" },
-    { text: "nothing you have laboured to learn will be lost", verse: "1 Corinthians 15:58" },
-    { text: "God gives you recall as you sit before your paper", verse: "Psalm 32:8" },
-    { text: "your diligence in study is rewarded with clarity in the exam", verse: "Proverbs 21:5" },
-
-    // Wisdom in the Exam Hall
-    { text: "God gives you wisdom to answer wisely when it matters most", verse: "James 1:5" },
-    { text: "the Spirit of wisdom and understanding rests upon you", verse: "Isaiah 11:2" },
-    { text: "God teaches your hands to write and your mind to think", verse: "Psalm 144:1" },
-    { text: "as you open your paper, God opens the eyes of your understanding", verse: "Ephesians 1:18" },
-    { text: "you have insight beyond your years, as Daniel had", verse: "Daniel 1:20" },
-    { text: "God makes even difficult questions plain before you", verse: "Isaiah 45:2" },
-    { text: "the Spirit of God guides you into all truth during this exam", verse: "John 16:13" },
-    { text: "God gives you thoughts and ideas that exceed your preparation", verse: "Ephesians 3:20" },
-
-    // Hard Work & Preparation
-    { text: "your labour in study is not in vain in the Lord", verse: "1 Corinthians 15:58" },
-    { text: "commit your revision to the Lord and your plans will stand", verse: "Proverbs 16:3" },
-    { text: "the diligent student shall stand before greatness", verse: "Proverbs 22:29" },
-    { text: "God honours the work of your hands in the late-night hours", verse: "Deuteronomy 28:12" },
-    { text: "what you sow in study, you shall reap in results", verse: "Galatians 6:7" },
-    { text: "study as unto the Lord and He will crown your effort", verse: "Colossians 3:23" },
-    { text: "God rewards every sacrifice you made to prepare for this", verse: "Hebrews 6:10" },
-    { text: "the seed of diligence you planted will bear fruit", verse: "John 12:24" },
-
-    // Overcoming Fear & Doubt
-    { text: "fear of failure has no hold on you, for God is your confidence", verse: "Proverbs 3:26" },
-    { text: "you are not overwhelmed, for God upholds you with His hand", verse: "Isaiah 41:10" },
-    { text: "the enemy cannot steal your focus or your peace", verse: "John 10:10" },
-    { text: "you cast down every thought of failure and inadequacy", verse: "2 Corinthians 10:5" },
-    { text: "God has not brought you this far to abandon you", verse: "Philippians 1:6" },
-    { text: "you silence every voice of doubt with the word of God", verse: "Romans 10:17" },
-    { text: "you are not behind, for God redeems your time", verse: "Ephesians 5:16" },
-    { text: "this exam is not too hard, for nothing is too hard for your God", verse: "Jeremiah 32:27" },
-
-    // Identity & Confidence
-    { text: "you are equipped for every good academic work", verse: "2 Timothy 3:17" },
-    { text: "God created your mind with precision and purpose", verse: "Psalm 139:14" },
-    { text: "you carry the wisdom of God into that examination hall", verse: "1 Corinthians 1:30" },
-    { text: "you are a student crowned with God's favour", verse: "Psalm 5:12" },
-    { text: "your future is not determined by one paper but by God's plan", verse: "Jeremiah 29:11" },
-    { text: "God makes you excel and not merely pass", verse: "Daniel 6:3" },
-    { text: "you shine like a star among your peers, for God's light is in you", verse: "Philippians 2:15" },
-
-    // After the Exam — Trust & Surrender
-    { text: "after you have done all you can, trust God with the rest", verse: "Ephesians 6:13" },
-    { text: "cast the result of this exam upon God and He will sustain you", verse: "Psalm 55:22" },
-    { text: "God turns your efforts into distinction", verse: "Psalm 75:6-7" },
-    { text: "your result is in God's hands, and His hands are good", verse: "Psalm 31:15" },
-    { text: "God causes all things, even this exam, to work for your good", verse: "Romans 8:28" },
-    { text: "you leave that hall with peace, for the matter is settled with God", verse: "Isaiah 26:3" },
-
-    // Daily Devotion as a Student
-    { text: "seek God early and find Him as your strength for the day", verse: "Psalm 63:1" },
-    { text: "begin every study session with God and end it in His peace", verse: "Psalm 16:8" },
-    { text: "God is your portion and your prize above every certificate", verse: "Psalm 73:26" },
-    { text: "no degree satisfies like knowing Christ your Lord", verse: "Philippians 3:8" },
-    { text: "let God's word be the foundation beneath all your knowledge", verse: "Matthew 7:24" },
-    { text: "you succeed in school and in spirit, for God blesses both", verse: "3 John 1:2" },
-    { text: "you are a living testimony of what God can do with a willing student", verse: "1 Timothy 4:15" },
-
-    // Calm Before & During Exams
-    { text: "you are not confused, for God is not the author of confusion", verse: "1 Corinthians 14:33" },
-    { text: "the Spirit of God gives you a sound mind", verse: "2 Timothy 1:7" },
-    { text: "do not be afraid, for God is with you in that exam hall", verse: "Isaiah 41:10" },
-    { text: "God has not given you a spirit of fear before this paper", verse: "2 Timothy 1:7" },
-    { text: "you shall not be put to shame, for God is your confidence", verse: "Psalm 25:3" },
-    { text: "the peace of God quiets every anxious thought in your mind", verse: "Philippians 4:7" },
-    { text: "you are still and you know that He is God", verse: "Psalm 46:10" },
-    { text: "God stills the storm in your mind to a whisper", verse: "Psalm 107:29" },
-    { text: "your heart is fixed and trusting in the Lord", verse: "Psalm 112:7" },
-    { text: "this exam cannot shake you, for you stand on solid ground", verse: "Matthew 7:25" },
-
-    // Recall & Retention
-    { text: "the Holy Spirit brings all things to your remembrance", verse: "John 14:26" },
-    { text: "God restores what you have learned and need to recall", verse: "Joel 2:25" },
-    { text: "your memory is sharp, for God renews your mind", verse: "Romans 12:2" },
-    { text: "what you have studied is sealed in your heart by the Spirit", verse: "John 6:27" },
-    { text: "God causes your mind to retain knowledge at the right time", verse: "Proverbs 2:1" },
-    { text: "nothing you have laboured to learn will be lost", verse: "1 Corinthians 15:58" },
-    { text: "God gives you recall as you sit before your paper", verse: "Psalm 32:8" },
-    { text: "your diligence in study is rewarded with clarity in the exam", verse: "Proverbs 21:5" },
-
-    // Wisdom in the Exam Hall
-    { text: "God gives you wisdom to answer wisely when it matters most", verse: "James 1:5" },
-    { text: "the Spirit of wisdom and understanding rests upon you", verse: "Isaiah 11:2" },
-    { text: "God teaches your hands to write and your mind to think", verse: "Psalm 144:1" },
-    { text: "as you open your paper, God opens the eyes of your understanding", verse: "Ephesians 1:18" },
-    { text: "you have insight beyond your years, as Daniel had", verse: "Daniel 1:20" },
-    { text: "God makes even difficult questions plain before you", verse: "Isaiah 45:2" },
-    { text: "the Spirit of God guides you into all truth during this exam", verse: "John 16:13" },
-    { text: "God gives you thoughts and ideas that exceed your preparation", verse: "Ephesians 3:20" },
-
-    // Hard Work & Preparation
-    { text: "your labour in study is not in vain in the Lord", verse: "1 Corinthians 15:58" },
-    { text: "commit your revision to the Lord and your plans will stand", verse: "Proverbs 16:3" },
-    { text: "the diligent student shall stand before greatness", verse: "Proverbs 22:29" },
-    { text: "God honours the work of your hands in the late-night hours", verse: "Deuteronomy 28:12" },
-    { text: "what you sow in study, you shall reap in results", verse: "Galatians 6:7" },
-    { text: "study as unto the Lord and He will crown your effort", verse: "Colossians 3:23" },
-    { text: "God rewards every sacrifice you made to prepare for this", verse: "Hebrews 6:10" },
-    { text: "the seed of diligence you planted will bear fruit", verse: "John 12:24" },
-
-    // Overcoming Fear & Doubt
-    { text: "fear of failure has no hold on you, for God is your confidence", verse: "Proverbs 3:26" },
-    { text: "you are not overwhelmed, for God upholds you with His hand", verse: "Isaiah 41:10" },
-    { text: "the enemy cannot steal your focus or your peace", verse: "John 10:10" },
-    { text: "you cast down every thought of failure and inadequacy", verse: "2 Corinthians 10:5" },
-    { text: "God has not brought you this far to abandon you", verse: "Philippians 1:6" },
-    { text: "you silence every voice of doubt with the word of God", verse: "Romans 10:17" },
-    { text: "you are not behind, for God redeems your time", verse: "Ephesians 5:16" },
-    { text: "this exam is not too hard, for nothing is too hard for your God", verse: "Jeremiah 32:27" },
-
-    // Identity & Confidence
-    { text: "you are equipped for every good academic work", verse: "2 Timothy 3:17" },
-    { text: "God created your mind with precision and purpose", verse: "Psalm 139:14" },
-    { text: "you carry the wisdom of God into that examination hall", verse: "1 Corinthians 1:30" },
-    { text: "you are a student crowned with God's favour", verse: "Psalm 5:12" },
-    { text: "your future is not determined by one paper but by God's plan", verse: "Jeremiah 29:11" },
-    { text: "God makes you excel and not merely pass", verse: "Daniel 6:3" },
-    { text: "you shine like a star among your peers, for God's light is in you", verse: "Philippians 2:15" },
-
-    // After the Exam — Trust & Surrender
-    { text: "after you have done all you can, trust God with the rest", verse: "Ephesians 6:13" },
-    { text: "cast the result of this exam upon God and He will sustain you", verse: "Psalm 55:22" },
-    { text: "God turns your efforts into distinction", verse: "Psalm 75:6-7" },
-    { text: "your result is in God's hands, and His hands are good", verse: "Psalm 31:15" },
-    { text: "God causes all things, even this exam, to work for your good", verse: "Romans 8:28" },
-    { text: "you leave that hall with peace, for the matter is settled with God", verse: "Isaiah 26:3" },
-
-    // Daily Devotion as a Student
-    { text: "seek God early and find Him as your strength for the day", verse: "Psalm 63:1" },
-    { text: "begin every study session with God and end it in His peace", verse: "Psalm 16:8" },
-    { text: "God is your portion and your prize above every certificate", verse: "Psalm 73:26" },
-    { text: "no degree satisfies like knowing Christ your Lord", verse: "Philippians 3:8" },
-    { text: "let God's word be the foundation beneath all your knowledge", verse: "Matthew 7:24" },
-    { text: "you succeed in school and in spirit, for God blesses both", verse: "3 John 1:2" },
-    { text: "you are a living testimony of what God can do with a willing student", verse: "1 Timothy 4:15" },
-
-    ];
-
-    // Mobile menu
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-    }
-
-    // Popup functions
-    function showComingSoon(event) {
-        event.preventDefault();
-        document.getElementById('comingSoonPopup').style.display = 'flex';
-        navMenu?.classList.remove('active');
-        hamburger?.classList.remove('active');
-    }
-
-    function closePopup() {
-        document.getElementById('comingSoonPopup').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        const popup = document.getElementById('comingSoonPopup');
-        if (event.target === popup) popup.style.display = 'none';
-    }
-
-    // Get today's date
-    function getTodayDate() {
-        return new Date().toLocaleDateString('en-US', { 
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-        });
-    }
-
-    // Get scripture based on name
-    function getDailyScripture(name) {
-        const today = new Date().toDateString();
-        const hash = (name + today).split('').reduce((a, b) => {
-            a = ((a << 5) - a) + b.charCodeAt(0);
-            return a & a;
-        }, 0);
-        return scriptureBank[Math.abs(hash) % scriptureBank.length];
-    }
-
-    // Generate card
-    function generateCard(name) {
-        const scripture = getDailyScripture(name);
-        const today = getTodayDate();
-        
-        document.getElementById('generatedCard').innerHTML = `
-            <div class="scripture-card-personal" id="cardToDownload">
-                <div class="daily-badge">TODAY'S WORD</div>
-                
-                <div class="card-header">
-                    <div class="logo-title">
-                        <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo" style="display:block; width:45px; height:45px; object-fit:contain;">
-                        <h2 class="fellowship-name">MFMCF MEDILAG</h2>
-                    </div>
-                    <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship</p>
-                </div>
-                
-                <div class="message-box">
-                    <p class="scripture-text">${name}, ${scripture.text}</p>
-                    <p class="scripture-verse">— ${scripture.verse}</p>
-                </div>
-                
-                <div class="date-stamp">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>${today}</span>
-                </div>
-            </div>
-        `;
-        
-        // Show download options after card is generated
-        document.getElementById('downloadOptions').style.display = 'flex';
-    }
-
-    // Show blank card initially
-    function showBlankCard() {
-        const today = getTodayDate();
-        
-        document.getElementById('generatedCard').innerHTML = `
-            <div class="scripture-card-personal" style="opacity:0.9;">
-                <div class="daily-badge">TODAY'S WORD</div>
-                
-                <div class="card-header">
-                    <div class="logo-title">
-                        <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo" style="display:block; width:45px; height:45px; object-fit:contain; opacity:0.7;">
-                        <h2 class="fellowship-name">MFMCF MEDILAG</h2>
-                    </div>
-                    <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship MEDILAG</p>
-                </div>
-                
-                <div class="message-box" style="background: linear-gradient(135deg, rgba(200,200,200,0.1), rgba(150,150,150,0.1));">
-                    <p class="scripture-text" style="color:#999;">Enter your name to receive your daily word</p>
-                    <p class="scripture-verse" style="color:#ccc; border-top-color:#ddd;">— Your personalized scripture will appear here</p>
-                </div>
-                
-                <div class="date-stamp">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>${today}</span>
-                </div>
-            </div>
-        `;
-        
-        // Hide download options for blank card
-        document.getElementById('downloadOptions').style.display = 'none';
-    }
-
-    // Initialize with blank card
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('todayDate').textContent = getTodayDate();
-        document.getElementById('userName').value = ''; // Empty input field
-        showBlankCard(); // Show blank card
-    });
-
-    // Generate button
-    document.getElementById('generateCardBtn').addEventListener('click', function() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) {
-            alert('Please enter your name!');
-            return;
-        }
-        generateCard(name);
-    });
-
-    // Enter key
-    document.getElementById('userName').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            document.getElementById('generateCardBtn').click();
-        }
-    });
-
-    // DOWNLOAD
-    document.getElementById('downloadCardBtn').addEventListener('click', function() {
-        const card = document.getElementById('cardToDownload');
-        if (!card) {
-            alert('Please generate a card first!');
-            return;
-        }
-        
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-        btn.disabled = true;
-        
-        // Use html2canvas
-        html2canvas(card, {
-            scale: 2,
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true
-        }).then(canvas => {
-            // Download
-            const link = document.createElement('a');
-            const name = document.getElementById('userName').value.trim() || 'Your';
-            link.download = `MFMCF-${name}-Daily-Word.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('Download failed. Please try again or use the Share button.');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    });
-
-    // SHARE - NOW WITH IMAGE SHARING CAPABILITY
-    document.getElementById('shareCardBtn').addEventListener('click', function() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) {
-            alert('Please enter your name first!');
-            return;
-        }
-        
-        const card = document.getElementById('cardToDownload');
-        if (!card) return;
-        
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
-        btn.disabled = true;
-        
-        // First, try to share as image using Web Share API
-        html2canvas(card, {
-            scale: 2,
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true
-        }).then(canvas => {
-            // Convert canvas to blob for sharing
-            canvas.toBlob(function(blob) {
-                if (!blob) {
-                    // If blob creation fails, fall back to text
-                    fallbackToTextShare(name);
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    return;
-                }
-                
-                // Create a file from the blob
-                const file = new File([blob], `MFMCF-${name}-Daily-Word.png`, { type: 'image/png' });
-                
-                // Check if Web Share API supports sharing files
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    // Share as image
-                    navigator.share({
-                        title: `Daily Word for ${name}`,
-                        text: `Check out your daily word from MFMCF MEDILAG!`,
-                        files: [file]
-                    }).then(() => {
-                        console.log('Shared successfully');
-                    }).catch((error) => {
-                        console.log('Error sharing:', error);
-                        // If sharing fails, fall back to text
-                        fallbackToTextShare(name);
-                    }).finally(() => {
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    });
-                } else {
-                    // If file sharing not supported, try sharing as URL with image data
-                    canvas.toDataURL('image/png');
-                    // Some platforms don't support image sharing, fall back to text
-                    fallbackToTextShare(name);
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }
-            }, 'image/png');
-        }).catch(error => {
-            console.error('Error creating image for share:', error);
-            // If image creation fails, fall back to text
-            fallbackToTextShare(name);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    });
-
-    // Fallback text sharing function
-    function fallbackToTextShare(name) {
-        const scriptureText = document.querySelector('.scripture-text')?.textContent || '';
-        const verseText = document.querySelector('.scripture-verse')?.textContent || '';
-        const today = getTodayDate();
-        
-        const message = `✨ DAILY WORD FOR ${name.toUpperCase()} ✨\n📅 ${today}\n\n${scriptureText}\n${verseText}\n\nFrom MFMCF MEDILAG - Mountain of Fire and Miracles Ministries Campus Fellowship\n\nDownload the app to get your daily word!`;
-        
-        if (navigator.share) {
-            navigator.share({
-                title: `Daily Word for ${name}`,
-                text: message,
-            }).catch(() => {
-                copyToClipboard(message);
-            });
-        } else {
-            copyToClipboard(message);
+            font-size: 0.9rem;
         }
     }
 
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('✨ Daily word copied to clipboard! You can now paste and share it.');
-        }).catch(() => {
-            prompt('Copy this message:', text);
-        });
-    }
+    /* Very small phones */
+    @media (max-width: 360px) {
+        .logo span {
+            display: none;
+        }
 
-    // Alternative share method for platforms that support images but not files
-    function shareImageViaDownload(name) {
-        const card = document.getElementById('cardToDownload');
-        html2canvas(card, {
-            scale: 2,
-            backgroundColor: '#ffffff'
-        }).then(canvas => {
-            // Create download link
-            const link = document.createElement('a');
-            link.download = `MFMCF-${name}-Daily-Word.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            
-            alert('Image downloaded! You can now share it manually.');
-        });
+        .scripture-card-personal {
+            max-width: 260px;
+        }
+
+        .fellowship-name {
+            font-size: 0.9rem;
+        }
+
+        .card-logo {
+            width: 30px;
+            height: 30px;
+        }
+
+        .scripture-text {
+            font-size: 0.9rem;
+        }
     }
-</script>
-</body>
-</html>
+</style>
