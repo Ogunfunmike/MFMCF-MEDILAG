@@ -366,6 +366,16 @@
             margin-top: 15px;
         }
 
+        /* Scroll highlight animation */
+        @keyframes cardPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .scroll-highlight {
+            animation: cardPop 0.5s ease;
+        }
+
         /* Responsive */
         @media (max-width: 992px) {
             .generator-container { grid-template-columns: 1fr; }
@@ -957,28 +967,60 @@
             document.getElementById('downloadOptions').style.display = 'none';
         }
 
+        // =============================================
+        // AUTO-SCROLL TO CARD ON MOBILE
+        // =============================================
+        function scrollToCardOnMobile() {
+            // Check if it's a mobile device (screen width <= 768px)
+            if (window.innerWidth <= 768) {
+                // Find the card preview section
+                const cardSection = document.querySelector('.card-preview-container');
+                if (cardSection) {
+                    // Smooth scroll to the card
+                    cardSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    
+                    // Add highlight animation to the card
+                    const card = document.getElementById('cardToDownload');
+                    if (card) {
+                        card.classList.add('scroll-highlight');
+                        setTimeout(() => {
+                            card.classList.remove('scroll-highlight');
+                        }, 1000);
+                    }
+                }
+            }
+        }
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('todayDate').textContent = getTodayDate();
             showBlankCard();
         });
 
-        // Generate button
+        // Generate button - WITH SCROLL
         document.getElementById('generateCardBtn').addEventListener('click', function() {
             const name = document.getElementById('userName').value.trim();
-            if (!name) { alert('Please enter your name!'); return; }
+            if (!name) { 
+                alert('Please enter your name!'); 
+                return; 
+            }
             generateCard(name);
+            scrollToCardOnMobile(); // Auto-scroll on mobile
         });
 
-        // Enter key
+        // Enter key - WITH SCROLL
         document.getElementById('userName').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') document.getElementById('generateCardBtn').click();
+            if (e.key === 'Enter') {
+                document.getElementById('generateCardBtn').click();
+                scrollToCardOnMobile(); // Auto-scroll on mobile
+            }
         });
 
         // =============================================
         // FIXED-SIZE CAPTURE HELPER
-        // This is the core fix: always renders the card
-        // at a consistent 1080px wide, regardless of screen.
         // =============================================
         function captureFixedCard(callback) {
             const card = document.getElementById('cardToDownload');
