@@ -145,6 +145,11 @@
             margin-bottom: 0.5rem;
         }
 
+        .cards-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
         /* Theme Selector */
         .theme-selector {
             background: white;
@@ -216,6 +221,11 @@
             margin-bottom: 10px;
         }
 
+        .input-section p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
         .input-group input {
             width: 100%;
             padding: 14px;
@@ -251,7 +261,7 @@
             background: #f8f9fa;
             padding: 20px;
             border-radius: 15px;
-            min-height: 500px;
+            min-height: 550px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -259,7 +269,7 @@
 
         /* ===== CARD THEMES ===== */
         
-        /* Base Card Styles */
+        /* Base Card Styles - FIXED ASPECT RATIO */
         .scripture-card-personal {
             background: white;
             border-radius: 24px;
@@ -268,9 +278,13 @@
             font-family: 'Poppins', sans-serif;
             position: relative;
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
+            min-height: 500px;
             margin: 0 auto;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         /* THEME 1: CLASSIC (Default) */
@@ -442,7 +456,8 @@
         .card-header {
             text-align: center;
             margin-top: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            flex-shrink: 0;
         }
 
         .logo-title {
@@ -478,8 +493,9 @@
         .message-box {
             border-radius: 20px;
             padding: 25px 15px;
-            margin: 20px 0;
+            margin: 15px 0;
             text-align: center;
+            flex: 0 1 auto;
         }
 
         .scripture-text {
@@ -509,14 +525,15 @@
             padding: 8px 16px;
             border-radius: 40px;
             width: fit-content;
-            margin: 0 auto;
+            margin: 10px auto 0;
+            flex-shrink: 0;
         }
 
         .date-stamp i {
             color: #A020F0;
         }
 
-        /* Download and Share Buttons - FIXED */
+        /* Download and Share Buttons */
         .download-options {
             display: flex;
             gap: 15px;
@@ -577,7 +594,7 @@
             box-shadow: 0 5px 10px rgba(74, 44, 95, 0.1);
         }
 
-        /* Story Format Buttons - FIXED */
+        /* Story Format Buttons */
         .story-options {
             display: flex;
             gap: 15px;
@@ -643,13 +660,6 @@
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
-        }
-
-        /* Button icons */
-        .btn-download i,
-        .btn-share i,
-        .btn-story i {
-            font-size: 1.1rem;
         }
 
         /* Popup */
@@ -759,7 +769,28 @@
 
         @media (max-width: 480px) {
             .scripture-card-personal {
-                max-width: 320px;
+                max-width: 340px;
+                min-height: 450px;
+                padding: 30px 20px 20px;
+            }
+            
+            .scripture-text {
+                font-size: 1.1rem;
+                line-height: 1.5;
+            }
+            
+            .message-box {
+                padding: 20px 12px;
+                margin: 10px 0;
+            }
+            
+            .fellowship-name {
+                font-size: 1.2rem;
+            }
+            
+            .card-logo {
+                width: 40px;
+                height: 40px;
             }
             
             .download-options,
@@ -780,6 +811,21 @@
         }
 
         @media (max-width: 360px) {
+            .scripture-card-personal {
+                max-width: 300px;
+                min-height: 420px;
+                padding: 25px 15px 15px;
+            }
+            
+            .scripture-text {
+                font-size: 1rem;
+            }
+            
+            .daily-badge {
+                font-size: 0.7rem;
+                padding: 4px 15px;
+            }
+            
             .btn-download, 
             .btn-share,
             .btn-story {
@@ -1402,7 +1448,7 @@
         }
     });
 
-    // ========== DOWNLOAD BUTTON ==========
+    // ========== DOWNLOAD BUTTON - FIXED SIZING ==========
     document.getElementById('downloadCardBtn').addEventListener('click', function() {
         const card = document.getElementById('cardToDownload');
         if (!card) {
@@ -1415,20 +1461,37 @@
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
         btn.disabled = true;
         
-        // Use html2canvas with exact card dimensions for perfect sizing
+        // Get the actual card dimensions
+        const cardWidth = card.offsetWidth;
+        const cardHeight = card.offsetHeight;
+        
         html2canvas(card, {
-            scale: 3, // Higher quality
+            scale: 3,
             backgroundColor: '#ffffff',
             logging: false,
             allowTaint: true,
             useCORS: true,
-            windowWidth: card.offsetWidth,
-            windowHeight: card.offsetHeight
+            windowWidth: cardWidth,
+            windowHeight: cardHeight
         }).then(canvas => {
+            // Create a new canvas with the exact card dimensions
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = cardWidth * 2;
+            finalCanvas.height = cardHeight * 2;
+            const ctx = finalCanvas.getContext('2d');
+            
+            // Draw white background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
+            
+            // Draw the card image
+            ctx.drawImage(canvas, 0, 0, finalCanvas.width, finalCanvas.height);
+            
+            // Download
             const link = document.createElement('a');
             const name = document.getElementById('userName').value.trim() || 'Your';
             link.download = `MFMCF-${name}-Daily-Word.png`;
-            link.href = canvas.toDataURL('image/png');
+            link.href = finalCanvas.toDataURL('image/png');
             link.click();
             
             btn.innerHTML = originalText;
