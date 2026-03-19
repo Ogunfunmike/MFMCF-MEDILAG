@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <!-- html2canvas for image download -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -57,7 +55,6 @@
         .logo img {
             height: 40px;
             width: auto;
-            display: block;
         }
 
         .logo span {
@@ -194,11 +191,6 @@
             border-color: #fff;
         }
 
-        .theme-btn.classic.active { background: linear-gradient(135deg, #A020F0, #4a2c5f); }
-        .theme-btn.elegant.active { background: linear-gradient(135deg, #daa520, #b8860b); }
-        .theme-btn.modern.active { background: linear-gradient(135deg, #2c3e50, #3498db); }
-        .theme-btn.nature.active { background: linear-gradient(135deg, #2e7d32, #81c784); }
-
         /* Generator Container */
         .generator-container {
             display: grid;
@@ -261,15 +253,13 @@
             background: #f8f9fa;
             padding: 20px;
             border-radius: 15px;
-            min-height: 550px;
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* ===== CARD THEMES ===== */
-        
-        /* Base Card Styles - FIXED ASPECT RATIO */
+        /* ===== SIMPLE CARD STYLES ===== */
         .scripture-card-personal {
             background: white;
             border-radius: 24px;
@@ -278,171 +268,17 @@
             font-family: 'Poppins', sans-serif;
             position: relative;
             width: 100%;
-            max-width: 400px;
-            min-height: 500px;
+            max-width: 380px;
             margin: 0 auto;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        /* THEME 1: CLASSIC (Default) */
-        .theme-classic {
-            background: white;
-            border: 1px solid rgba(160, 32, 240, 0.2);
-        }
-        .theme-classic .daily-badge {
-            background: linear-gradient(135deg, #A020F0, #4a2c5f);
-            color: white;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-        }
-        .theme-classic .fellowship-name {
-            color: #1a2b4c;
-        }
-        .theme-classic .message-box {
-            background: linear-gradient(135deg, rgba(160, 32, 240, 0.05), rgba(74, 44, 95, 0.05));
-        }
-
-        /* THEME 2: ELEGANT */
-        .theme-elegant {
-            background: linear-gradient(135deg, #fff9e6, #fff);
-            border: 2px solid #daa520;
-            position: relative;
-        }
-        .theme-elegant::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 1px solid #daa520;
-            border-radius: 16px;
-            pointer-events: none;
-        }
-        .theme-elegant .daily-badge {
-            background: linear-gradient(135deg, #daa520, #b8860b);
-            color: white;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            letter-spacing: 2px;
-        }
-        .theme-elegant .fellowship-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            color: #b8860b;
-        }
-        .theme-elegant .message-box {
-            background: rgba(218, 165, 32, 0.05);
-            border: 1px solid rgba(218, 165, 32, 0.2);
-        }
-        .theme-elegant .scripture-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-style: italic;
-        }
-
-        /* THEME 3: MODERN */
-        .theme-modern {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
-            border: none;
-            color: white;
-        }
-        .theme-modern .daily-badge {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .theme-modern .fellowship-name {
-            color: white;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-        .theme-modern .subtitle {
-            color: rgba(255,255,255,0.9);
-        }
-        .theme-modern .message-box {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .theme-modern .scripture-text {
-            color: white;
-            font-weight: 300;
-        }
-        .theme-modern .scripture-verse {
-            color: rgba(255,255,255,0.8);
-            border-top-color: rgba(255,255,255,0.3);
-        }
-        .theme-modern .date-stamp {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-        .theme-modern .date-stamp i {
-            color: white;
-        }
-
-        /* THEME 4: NATURE */
-        .theme-nature {
-            background: linear-gradient(135deg, #2e7d32, #81c784);
-            border: none;
-            position: relative;
-            overflow: hidden;
-            color: white;
-        }
-        .theme-nature::before {
-            content: '🌿🌱🍃';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            font-size: 40px;
-            opacity: 0.1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transform: rotate(-10deg);
-            pointer-events: none;
-        }
-        .theme-nature .daily-badge {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        .theme-nature .fellowship-name {
-            color: white;
-        }
-        .theme-nature .subtitle {
-            color: rgba(255,255,255,0.9);
-        }
-        .theme-nature .message-box {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(5px);
-        }
-        .theme-nature .scripture-text {
-            color: white;
-        }
-        .theme-nature .scripture-verse {
-            color: rgba(255,255,255,0.9);
-            border-top-color: rgba(255,255,255,0.3);
-        }
-        .theme-nature .date-stamp {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-        .theme-nature .date-stamp i {
-            color: white;
-        }
-
-        /* Common Card Elements */
         .daily-badge {
             position: absolute;
             top: 15px;
             left: 50%;
             transform: translateX(-50%);
+            background: linear-gradient(135deg, #A020F0, #4a2c5f);
+            color: white;
             padding: 6px 20px;
             border-radius: 30px;
             font-size: 0.8rem;
@@ -450,14 +286,12 @@
             letter-spacing: 1px;
             white-space: nowrap;
             z-index: 10;
-            color: white;
+            box-shadow: 0 4px 10px rgba(160, 32, 240, 0.2);
         }
 
         .card-header {
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            flex-shrink: 0;
+            margin: 25px 0 20px;
         }
 
         .logo-title {
@@ -466,53 +300,51 @@
             justify-content: center;
             gap: 10px;
             margin-bottom: 8px;
-            flex-wrap: wrap;
         }
 
         .card-logo {
             width: 45px;
             height: 45px;
             object-fit: contain;
-            display: block;
         }
 
         .fellowship-name {
-            font-size: 1.3rem;
+            color: #1a2b4c;
+            font-size: 1.2rem;
             font-weight: 700;
             margin: 0;
-            line-height: 1.2;
         }
 
         .subtitle {
-            font-size: 0.8rem;
+            color: #4a2c5f;
+            font-size: 0.75rem;
             line-height: 1.4;
             opacity: 0.9;
-            padding: 0 10px;
         }
 
         .message-box {
-            border-radius: 20px;
-            padding: 25px 15px;
-            margin: 15px 0;
+            background: linear-gradient(135deg, rgba(160, 32, 240, 0.05), rgba(74, 44, 95, 0.05));
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin: 20px 0;
             text-align: center;
-            flex: 0 1 auto;
         }
 
         .scripture-text {
             font-size: 1.2rem;
             line-height: 1.6;
+            color: #1a2b4c;
             font-weight: 600;
             margin-bottom: 12px;
             font-family: 'Playfair Display', serif;
-            word-break: break-word;
         }
 
         .scripture-verse {
-            font-size: 0.95rem;
+            color: #4a2c5f;
+            font-size: 0.9rem;
             font-weight: 600;
-            border-top: 1px dashed rgba(0,0,0,0.1);
+            border-top: 1px dashed rgba(160, 32, 240, 0.3);
             padding-top: 12px;
-            margin-top: 5px;
         }
 
         .date-stamp {
@@ -520,13 +352,13 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 0.8rem;
+            color: #888;
+            font-size: 0.75rem;
             background: #f8f9fa;
             padding: 8px 16px;
-            border-radius: 40px;
+            border-radius: 30px;
             width: fit-content;
-            margin: 10px auto 0;
-            flex-shrink: 0;
+            margin: 5px auto 0;
         }
 
         .date-stamp i {
@@ -550,14 +382,12 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            flex: 0 1 auto;
             min-width: 160px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .btn-download {
@@ -566,14 +396,8 @@
         }
 
         .btn-download:hover {
-            background: linear-gradient(135deg, #4a2c5f, #A020F0);
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(160, 32, 240, 0.3);
-        }
-
-        .btn-download:active {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 10px rgba(160, 32, 240, 0.2);
         }
 
         .btn-share {
@@ -589,12 +413,7 @@
             box-shadow: 0 8px 15px rgba(74, 44, 95, 0.2);
         }
 
-        .btn-share:active {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 10px rgba(74, 44, 95, 0.1);
-        }
-
-        /* Story Format Buttons */
+        /* Story Buttons */
         .story-options {
             display: flex;
             gap: 15px;
@@ -611,32 +430,26 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             font-size: 1rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            flex: 0 1 auto;
             min-width: 180px;
             color: white;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .btn-story i {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
         .btn-story.instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
         }
 
         .btn-story.instagram:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 15px rgba(225, 48, 108, 0.4);
-        }
-
-        .btn-story.instagram:active {
-            transform: translateY(-1px);
         }
 
         .btn-story.whatsapp {
@@ -648,20 +461,6 @@
             box-shadow: 0 8px 15px rgba(37, 211, 102, 0.4);
         }
 
-        .btn-story.whatsapp:active {
-            transform: translateY(-1px);
-        }
-
-        /* Disabled button states */
-        .btn-download:disabled,
-        .btn-share:disabled,
-        .btn-story:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
         /* Popup */
         .popup-overlay {
             position: fixed;
@@ -669,7 +468,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0,0,0,0.5);
             display: none;
             align-items: center;
             justify-content: center;
@@ -680,7 +479,7 @@
         .popup-container {
             background: white;
             border-radius: 24px;
-            padding: 30px 25px;
+            padding: 30px;
             max-width: 350px;
             width: 90%;
             text-align: center;
@@ -715,17 +514,8 @@
             padding: 12px 35px;
             border-radius: 50px;
             font-size: 1rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 200px;
-            margin: 0 auto;
-        }
-
-        .popup-close:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(160, 32, 240, 0.3);
+            margin-top: 15px;
         }
 
         /* Mobile Responsive */
@@ -745,47 +535,16 @@
             .cards-hero h1 {
                 font-size: 2rem;
             }
-            .theme-buttons {
-                gap: 10px;
-            }
             .theme-btn {
                 padding: 8px 20px;
                 font-size: 0.9rem;
-            }
-            
-            .download-options,
-            .story-options {
-                gap: 12px;
-            }
-            
-            .btn-download, 
-            .btn-share,
-            .btn-story {
-                padding: 12px 24px;
-                min-width: 140px;
-                font-size: 0.95rem;
             }
         }
 
         @media (max-width: 480px) {
             .scripture-card-personal {
-                max-width: 340px;
-                min-height: 450px;
-                padding: 30px 20px 20px;
-            }
-            
-            .scripture-text {
-                font-size: 1.1rem;
-                line-height: 1.5;
-            }
-            
-            .message-box {
-                padding: 20px 12px;
-                margin: 10px 0;
-            }
-            
-            .fellowship-name {
-                font-size: 1.2rem;
+                max-width: 320px;
+                padding: 35px 20px 25px;
             }
             
             .card-logo {
@@ -793,48 +552,36 @@
                 height: 40px;
             }
             
-            .download-options,
-            .story-options {
-                flex-direction: column;
-                gap: 10px;
-                width: 100%;
+            .fellowship-name {
+                font-size: 1.1rem;
             }
             
-            .btn-download, 
-            .btn-share,
-            .btn-story {
+            .scripture-text {
+                font-size: 1.1rem;
+            }
+            
+            .story-options,
+            .download-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn-story,
+            .btn-download,
+            .btn-share {
                 width: 100%;
-                max-width: none;
-                padding: 14px 20px;
-                font-size: 1rem;
+                min-width: auto;
             }
         }
 
         @media (max-width: 360px) {
             .scripture-card-personal {
-                max-width: 300px;
-                min-height: 420px;
-                padding: 25px 15px 15px;
+                max-width: 280px;
+                padding: 30px 15px 20px;
             }
             
             .scripture-text {
                 font-size: 1rem;
-            }
-            
-            .daily-badge {
-                font-size: 0.7rem;
-                padding: 4px 15px;
-            }
-            
-            .btn-download, 
-            .btn-share,
-            .btn-story {
-                padding: 12px 16px;
-                font-size: 0.9rem;
-            }
-            
-            .btn-story i {
-                font-size: 1.1rem;
             }
         }
     </style>
@@ -944,16 +691,17 @@
     </section>
 
     <script>
-    // Scripture Bank
-    const scriptureBank = [
-        { text: "you are helped by God", verse: "Psalm 121:2" },
-        { text: "the Lord is your helper", verse: "Hebrews 13:6" },
-        { text: "God is your refuge and strength", verse: "Psalm 46:1" },
-        { text: "you can do all things through Christ", verse: "Philippians 4:13" },
-        { text: "the Lord gives you wisdom", verse: "Proverbs 2:6" },
-        { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
-        { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
-        { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
+        // Scripture Bank
+        const scriptureBank = [
+            { text: "you are helped by God", verse: "Psalm 121:2" },
+            { text: "the Lord is your helper", verse: "Hebrews 13:6" },
+            { text: "God is your refuge and strength", verse: "Psalm 46:1" },
+            { text: "you can do all things through Christ", verse: "Philippians 4:13" },
+            { text: "the Lord gives you wisdom", verse: "Proverbs 2:6" },
+            { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
+            { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
+            { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
+        
 
     // God Goes Before You
     { text: "God goes before you into every exam and every challenge", verse: "Deuteronomy 31:8" },
@@ -1174,7 +922,6 @@
     { text: "let God's word be the foundation beneath all your knowledge", verse: "Matthew 7:24" },
     { text: "you succeed in school and in spirit, for God blesses both", verse: "3 John 1:2" },
     { text: "you are a living testimony of what God can do with a willing student", verse: "1 Timothy 4:15" },
-
     // Help & Strength
     { text: "you are helped by God", verse: "Psalm 121:2" },
     { text: "the Lord is your helper", verse: "Hebrews 13:6" },
@@ -1294,400 +1041,326 @@
     { text: "acknowledge God in all your ways and He directs your path", verse: "Proverbs 3:6" },
     { text: "the entrance of God's word gives light", verse: "Psalm 119:130" },
     { text: "God's Word keeps you from stumbling", verse: "Psalm 119:165" },
-    ];
+        ];
 
-    // Current theme
-    let currentTheme = 'classic';
+        // Current theme
+        let currentTheme = 'classic';
 
-    // Mobile menu
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    if (hamburger) {
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
-    }
-
-    // Popup functions
-    function showComingSoon(event) {
-        event.preventDefault();
-        document.getElementById('comingSoonPopup').style.display = 'flex';
-        navMenu?.classList.remove('active');
-        hamburger?.classList.remove('active');
-    }
-
-    function closePopup() {
-        document.getElementById('comingSoonPopup').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        const popup = document.getElementById('comingSoonPopup');
-        if (event.target === popup) popup.style.display = 'none';
-    }
-
-    // Get today's date
-    function getTodayDate() {
-        return new Date().toLocaleDateString('en-US', { 
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-        });
-    }
-
-    // Get scripture based on name
-    function getDailyScripture(name) {
-        const today = new Date().toDateString();
-        const hash = (name + today).split('').reduce((a, b) => {
-            a = ((a << 5) - a) + b.charCodeAt(0);
-            return a & a;
-        }, 0);
-        return scriptureBank[Math.abs(hash) % scriptureBank.length];
-    }
-
-    // Set theme
-    function setTheme(theme) {
-        currentTheme = theme;
+        // Mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
         
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        document.querySelector(`.theme-btn.${theme}`).classList.add('active');
-        
-        const name = document.getElementById('userName').value.trim();
-        if (name) {
-            generateCard(name);
-        } else {
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+
+        // Popup functions
+        function showComingSoon(event) {
+            event.preventDefault();
+            document.getElementById('comingSoonPopup').style.display = 'flex';
+            navMenu?.classList.remove('active');
+            hamburger?.classList.remove('active');
+        }
+
+        function closePopup() {
+            document.getElementById('comingSoonPopup').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const popup = document.getElementById('comingSoonPopup');
+            if (event.target === popup) popup.style.display = 'none';
+        }
+
+        // Get today's date
+        function getTodayDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date().toLocaleDateString('en-US', options);
+        }
+
+        // Get scripture based on name
+        function getDailyScripture(name) {
+            const today = new Date().toDateString();
+            const uniqueKey = name + today;
+            let hash = 0;
+            for (let i = 0; i < uniqueKey.length; i++) {
+                hash = ((hash << 5) - hash) + uniqueKey.charCodeAt(i);
+                hash |= 0;
+            }
+            return scriptureBank[Math.abs(hash) % scriptureBank.length];
+        }
+
+        // Set theme
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.theme-btn.${theme}`).classList.add('active');
+            
+            const name = document.getElementById('userName').value.trim();
+            if (name) {
+                generateCard(name);
+            } else {
+                showBlankCard();
+            }
+        }
+
+        // Generate card
+        function generateCard(name) {
+            const scripture = getDailyScripture(name);
+            const today = getTodayDate();
+            
+            let themeStyles = '';
+            
+            document.getElementById('generatedCard').innerHTML = `
+                <div class="scripture-card-personal" id="cardToDownload">
+                    <div class="daily-badge">TODAY'S WORD</div>
+                    
+                    <div class="card-header">
+                        <div class="logo-title">
+                            <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo">
+                            <h2 class="fellowship-name">MFMCF MEDILAG</h2>
+                        </div>
+                        <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship</p>
+                    </div>
+                    
+                    <div class="message-box">
+                        <p class="scripture-text">${name}, ${scripture.text}</p>
+                        <p class="scripture-verse">— ${scripture.verse}</p>
+                    </div>
+                    
+                    <div class="date-stamp">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>${today}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('downloadOptions').style.display = 'flex';
+        }
+
+        // Show blank card
+        function showBlankCard() {
+            const today = getTodayDate();
+            
+            document.getElementById('generatedCard').innerHTML = `
+                <div class="scripture-card-personal" style="opacity:0.9;">
+                    <div class="daily-badge">TODAY'S WORD</div>
+                    
+                    <div class="card-header">
+                        <div class="logo-title">
+                            <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo" style="opacity:0.7;">
+                            <h2 class="fellowship-name">MFMCF MEDILAG</h2>
+                        </div>
+                        <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship</p>
+                    </div>
+                    
+                    <div class="message-box">
+                        <p class="scripture-text" style="color:#999;">Enter your name to receive your daily word</p>
+                        <p class="scripture-verse" style="color:#ccc;">— Your personalized scripture will appear here</p>
+                    </div>
+                    
+                    <div class="date-stamp">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>${today}</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('downloadOptions').style.display = 'none';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('todayDate').textContent = getTodayDate();
             showBlankCard();
-        }
-    }
-
-    // Generate card with current theme
-    function generateCard(name) {
-        const scripture = getDailyScripture(name);
-        const today = getTodayDate();
-        
-        document.getElementById('generatedCard').innerHTML = `
-            <div class="scripture-card-personal theme-${currentTheme}" id="cardToDownload">
-                <div class="daily-badge">TODAY'S WORD</div>
-                
-                <div class="card-header">
-                    <div class="logo-title">
-                        <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo">
-                        <h2 class="fellowship-name">MFMCF MEDILAG</h2>
-                    </div>
-                    <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship</p>
-                </div>
-                
-                <div class="message-box">
-                    <p class="scripture-text">${name}, ${scripture.text}</p>
-                    <p class="scripture-verse">— ${scripture.verse}</p>
-                </div>
-                
-                <div class="date-stamp">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>${today}</span>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('downloadOptions').style.display = 'flex';
-    }
-
-    // Show blank card
-    function showBlankCard() {
-        const today = getTodayDate();
-        
-        document.getElementById('generatedCard').innerHTML = `
-            <div class="scripture-card-personal theme-${currentTheme}" style="opacity:0.9;">
-                <div class="daily-badge">TODAY'S WORD</div>
-                
-                <div class="card-header">
-                    <div class="logo-title">
-                        <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo" style="opacity:0.7;">
-                        <h2 class="fellowship-name">MFMCF MEDILAG</h2>
-                    </div>
-                    <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship</p>
-                </div>
-                
-                <div class="message-box">
-                    <p class="scripture-text" style="color:#999;">Enter your name to receive your daily word</p>
-                    <p class="scripture-verse" style="color:#ccc;">— Your personalized scripture will appear here</p>
-                </div>
-                
-                <div class="date-stamp">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>${today}</span>
-                </div>
-            </div>
-        `;
-        
-        document.getElementById('downloadOptions').style.display = 'none';
-    }
-
-    // Initialize with blank card
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('todayDate').textContent = getTodayDate();
-        document.getElementById('userName').value = '';
-        showBlankCard();
-    });
-
-    // Generate button
-    document.getElementById('generateCardBtn').addEventListener('click', function() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) {
-            alert('Please enter your name!');
-            return;
-        }
-        generateCard(name);
-    });
-
-    // Enter key
-    document.getElementById('userName').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            document.getElementById('generateCardBtn').click();
-        }
-    });
-
-    // ========== DOWNLOAD BUTTON - FIXED SIZING ==========
-    document.getElementById('downloadCardBtn').addEventListener('click', function() {
-        const card = document.getElementById('cardToDownload');
-        if (!card) {
-            alert('Please generate a card first!');
-            return;
-        }
-        
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-        btn.disabled = true;
-        
-        // Get the actual card dimensions
-        const cardWidth = card.offsetWidth;
-        const cardHeight = card.offsetHeight;
-        
-        html2canvas(card, {
-            scale: 3,
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true,
-            windowWidth: cardWidth,
-            windowHeight: cardHeight
-        }).then(canvas => {
-            // Create a new canvas with the exact card dimensions
-            const finalCanvas = document.createElement('canvas');
-            finalCanvas.width = cardWidth * 2;
-            finalCanvas.height = cardHeight * 2;
-            const ctx = finalCanvas.getContext('2d');
-            
-            // Draw white background
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
-            
-            // Draw the card image
-            ctx.drawImage(canvas, 0, 0, finalCanvas.width, finalCanvas.height);
-            
-            // Download
-            const link = document.createElement('a');
-            const name = document.getElementById('userName').value.trim() || 'Your';
-            link.download = `MFMCF-${name}-Daily-Word.png`;
-            link.href = finalCanvas.toDataURL('image/png');
-            link.click();
-            
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('Download failed. Please try again.');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
         });
-    });
 
-    // ========== SHARE BUTTON ==========
-    document.getElementById('shareCardBtn').addEventListener('click', function() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) {
-            alert('Please enter your name first!');
-            return;
-        }
-        
-        const card = document.getElementById('cardToDownload');
-        if (!card) return;
-        
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
-        btn.disabled = true;
-        
-        html2canvas(card, {
-            scale: 3,
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true,
-            windowWidth: card.offsetWidth,
-            windowHeight: card.offsetHeight
-        }).then(canvas => {
-            canvas.toBlob(function(blob) {
-                if (!blob) {
-                    fallbackToTextShare(name);
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    return;
-                }
+        // Generate button
+        document.getElementById('generateCardBtn').addEventListener('click', function() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) {
+                alert('Please enter your name!');
+                return;
+            }
+            generateCard(name);
+        });
+
+        // Enter key
+        document.getElementById('userName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('generateCardBtn').click();
+            }
+        });
+
+        // ========== SIMPLE DOWNLOAD ==========
+        document.getElementById('downloadCardBtn').addEventListener('click', function() {
+            const card = document.getElementById('cardToDownload');
+            if (!card) {
+                alert('Please generate a card first!');
+                return;
+            }
+            
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            btn.disabled = true;
+            
+            html2canvas(card, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                const name = document.getElementById('userName').value.trim() || 'Your';
+                link.download = `MFMCF-${name}-Daily-Word.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
                 
-                const file = new File([blob], `MFMCF-${name}-Daily-Word.png`, { type: 'image/png' });
-                
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    navigator.share({
-                        title: `Daily Word for ${name}`,
-                        text: `My daily word from MFMCF MEDILAG`,
-                        files: [file]
-                    }).catch((error) => {
-                        console.log('Share failed:', error);
-                        downloadFallback(canvas, name);
-                    }).finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Download failed. Please try again.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+
+        // ========== SIMPLE SHARE ==========
+        document.getElementById('shareCardBtn').addEventListener('click', function() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) {
+                alert('Please enter your name first!');
+                return;
+            }
+            
+            const card = document.getElementById('cardToDownload');
+            if (!card) return;
+            
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
+            btn.disabled = true;
+            
+            html2canvas(card, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], `MFMCF-${name}-Daily-Word.png`, { type: 'image/png' });
+                    
+                    if (navigator.share && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: `Daily Word for ${name}`
+                        }).catch(() => {
+                            const link = document.createElement('a');
+                            link.download = `MFMCF-${name}-Daily-Word.png`;
+                            link.href = canvas.toDataURL('image/png');
+                            link.click();
+                        }).finally(() => {
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        });
+                    } else {
+                        const link = document.createElement('a');
+                        link.download = `MFMCF-${name}-Daily-Word.png`;
+                        link.href = canvas.toDataURL('image/png');
+                        link.click();
                         btn.innerHTML = originalText;
                         btn.disabled = false;
-                    });
-                } else {
-                    downloadFallback(canvas, name);
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }
-            }, 'image/png');
-        }).catch(error => {
-            console.error('Error:', error);
-            fallbackToTextShare(name);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    });
-
-    // ========== INSTAGRAM STORY ==========
-    document.getElementById('storyInstagramBtn').addEventListener('click', function() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) {
-            alert('Please enter your name first!');
-            return;
-        }
-        
-        const card = document.getElementById('cardToDownload');
-        if (!card) return;
-        
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
-        btn.disabled = true;
-        
-        html2canvas(card, {
-            scale: 3,
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true,
-            windowWidth: card.offsetWidth,
-            windowHeight: card.offsetHeight
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `MFMCF-${name}-Instagram-Story.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            
-            setTimeout(() => {
-                alert('📸 Image saved! Now:\n1. Open Instagram\n2. Go to Your Story\n3. Tap Gallery icon\n4. Select this image\n5. Post to your story!\n\nTag @MFMCFMEDILAG');
-            }, 500);
-            
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('Failed to create story image. Please try again.');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    });
-
-    // ========== WHATSAPP STORY ==========
-    document.getElementById('storyWhatsAppBtn').addEventListener('click', function() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) {
-            alert('Please enter your name first!');
-            return;
-        }
-        
-        const card = document.getElementById('cardToDownload');
-        if (!card) return;
-        
-        const btn = this;
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
-        btn.disabled = true;
-        
-        html2canvas(card, {
-            scale: 3,
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true,
-            windowWidth: card.offsetWidth,
-            windowHeight: card.offsetHeight
-        }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `MFMCF-${name}-WhatsApp-Story.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            
-            setTimeout(() => {
-                alert('📱 Image saved! Now:\n1. Open WhatsApp\n2. Go to Status\n3. Tap Gallery icon\n4. Select this image\n5. Post to your status!\n\nShare your blessing! 🙏');
-            }, 500);
-            
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('Failed to create story image. Please try again.');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    });
-
-    // Helper function for download fallback
-    function downloadFallback(canvas, name) {
-        const link = document.createElement('a');
-        link.download = `MFMCF-${name}-Daily-Word.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-    }
-
-    // Fallback text share
-    function fallbackToTextShare(name) {
-        const scriptureText = document.querySelector('.scripture-text')?.textContent || '';
-        const verseText = document.querySelector('.scripture-verse')?.textContent || '';
-        const today = getTodayDate();
-        
-        const message = `✨ DAILY WORD FOR ${name.toUpperCase()} ✨\n📅 ${today}\n\n“${scriptureText}”\n${verseText}\n\nFrom MFMCF MEDILAG`;
-        
-        if (navigator.share) {
-            navigator.share({
-                title: `Daily Word for ${name}`,
-                text: message,
-            }).catch(() => {
-                copyToClipboard(message);
+                    }
+                });
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Share failed. Please try again.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             });
-        } else {
-            copyToClipboard(message);
-        }
-    }
-
-    function copyToClipboard(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert('✨ Daily word copied to clipboard!');
-        }).catch(() => {
-            prompt('Copy this message:', text);
         });
-    }
-</script>
+
+        // ========== INSTAGRAM STORY ==========
+        document.getElementById('storyInstagramBtn').addEventListener('click', function() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) {
+                alert('Please enter your name first!');
+                return;
+            }
+            
+            const card = document.getElementById('cardToDownload');
+            if (!card) return;
+            
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
+            btn.disabled = true;
+            
+            html2canvas(card, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `MFMCF-${name}-Instagram-Story.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                setTimeout(() => {
+                    alert('📸 Image saved! Open Instagram → Your Story → Add from gallery');
+                }, 500);
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Failed to create story image.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+
+        // ========== WHATSAPP STORY ==========
+        document.getElementById('storyWhatsAppBtn').addEventListener('click', function() {
+            const name = document.getElementById('userName').value.trim();
+            if (!name) {
+                alert('Please enter your name first!');
+                return;
+            }
+            
+            const card = document.getElementById('cardToDownload');
+            if (!card) return;
+            
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
+            btn.disabled = true;
+            
+            html2canvas(card, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `MFMCF-${name}-WhatsApp-Story.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                setTimeout(() => {
+                    alert('📱 Image saved! Open WhatsApp → Status → Add from gallery');
+                }, 500);
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Failed to create story image.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+    </script>
 </body>
 </html>
