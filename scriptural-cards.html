@@ -1220,7 +1220,7 @@
     });
 
     // DOWNLOAD
-   // DOWNLOAD - FIXED SIZE (600x600)
+   // DOWNLOAD - PERFECT SIZE MATCHING THE CARD
 document.getElementById('downloadCardBtn').addEventListener('click', function() {
     const card = document.getElementById('cardToDownload');
     if (!card) {
@@ -1233,76 +1233,115 @@ document.getElementById('downloadCardBtn').addEventListener('click', function() 
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
     btn.disabled = true;
     
-    // Set fixed dimensions for the card
-    const originalWidth = card.style.width;
-    const originalMaxWidth = card.style.maxWidth;
+    // Get the actual card dimensions
+    const cardWidth = card.offsetWidth;
+    const cardHeight = card.offsetHeight;
     
-    // Force a fixed size for download
-    card.style.width = '500px';
-    card.style.maxWidth = '500px';
-    card.style.height = 'auto';
-    card.style.margin = '0 auto';
+    // Use html2canvas with the exact card dimensions
+    html2canvas(card, {
+        scale: 3,                    // Higher scale for better quality (3x)
+        backgroundColor: '#ffffff',
+        logging: false,
+        allowTaint: true,
+        useCORS: true,
+        windowWidth: cardWidth,
+        windowHeight: cardHeight,
+        onclone: function(clonedDoc, element) {
+            // Ensure the cloned card has the same styles
+            element.style.width = cardWidth + 'px';
+            element.style.height = 'auto';
+            element.style.margin = '0';
+            element.style.boxShadow = 'none';
+        }
+    }).then(canvas => {
+        // Create download with the actual card dimensions
+        const link = document.createElement('a');
+        const name = document.getElementById('userName').value.trim() || 'Your';
+        link.download = `MFMCF-${name}-Daily-Word.png`;
+        
+        // Use the canvas directly - it will be the exact size of the card * scale
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }).catch(error => {
+        console.error('Error:', error);
+        alert('Download failed. Please try again.');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+});
+
+// SHARE FUNCTION - Also updated for better quality
+document.getElementById('shareCardBtn').addEventListener('click', function() {
+    const name = document.getElementById('userName').value.trim();
+    if (!name) {
+        alert('Please enter your name first!');
+        return;
+    }
     
-    // Small delay to ensure styles apply
-    setTimeout(() => {
-        // Use html2canvas with fixed dimensions
-        html2canvas(card, {
-            width: 500,              // Fixed width
-            height: 600,              // Fixed height
-            scale: 2,                 // Higher quality
-            backgroundColor: '#ffffff',
-            logging: false,
-            allowTaint: true,
-            useCORS: true,
-            windowWidth: 500,
-            windowHeight: 600
-        }).then(canvas => {
-            // Create a new canvas with exact dimensions
-            const finalCanvas = document.createElement('canvas');
-            finalCanvas.width = 500;
-            finalCanvas.height = 600;
-            const ctx = finalCanvas.getContext('2d');
+    const card = document.getElementById('cardToDownload');
+    if (!card) return;
+    
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
+    btn.disabled = true;
+    
+    const cardWidth = card.offsetWidth;
+    const cardHeight = card.offsetHeight;
+    
+    html2canvas(card, {
+        scale: 3,
+        backgroundColor: '#ffffff',
+        logging: false,
+        allowTaint: true,
+        useCORS: true,
+        windowWidth: cardWidth,
+        windowHeight: cardHeight
+    }).then(canvas => {
+        canvas.toBlob(function(blob) {
+            if (!blob) {
+                fallbackToTextShare(name);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                return;
+            }
             
-            // Draw white background
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, 500, 600);
+            const file = new File([blob], `MFMCF-${name}-Daily-Word.png`, { type: 'image/png' });
             
-            // Calculate scaling to fit the card in the canvas
-            const scaleX = 500 / canvas.width;
-            const scaleY = 600 / canvas.height;
-            const scale = Math.min(scaleX, scaleY);
-            
-            const x = (500 - canvas.width * scale) / 2;
-            const y = (600 - canvas.height * scale) / 2;
-            
-            // Draw the card image centered
-            ctx.drawImage(canvas, x, y, canvas.width * scale, canvas.height * scale);
-            
-            // Download
-            const link = document.createElement('a');
-            const name = document.getElementById('userName').value.trim() || 'Your';
-            link.download = `MFMCF-${name}-Daily-Word.png`;
-            link.href = finalCanvas.toDataURL('image/png');
-            link.click();
-            
-            // Restore original card styles
-            card.style.width = originalWidth;
-            card.style.maxWidth = originalMaxWidth;
-            
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        }).catch(error => {
-            console.error('Error:', error);
-            
-            // Restore original card styles
-            card.style.width = originalWidth;
-            card.style.maxWidth = originalMaxWidth;
-            
-            alert('Download failed. Please try again.');
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
-    }, 200);
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    title: `Daily Word for ${name}`,
+                    text: `Your daily word from MFMCF MEDILAG`,
+                    files: [file]
+                }).catch(() => {
+                    fallbackToTextShare(name);
+                }).finally(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+            } else {
+                // If can't share image, offer download
+                if (confirm('Image sharing not supported. Would you like to download the image to share manually?')) {
+                    const link = document.createElement('a');
+                    link.download = `MFMCF-${name}-Daily-Word.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                } else {
+                    fallbackToTextShare(name);
+                }
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }, 'image/png');
+    }).catch(error => {
+        console.error('Error:', error);
+        fallbackToTextShare(name);
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
 });
 
 // SHARE - WITH FIXED SIZE IMAGE
