@@ -1,4 +1,29 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Personal Scripture - MFMCF MEDILAG</title>
+     <link rel="icon" type="image/png" href="20241125_233804.png">
+    <link rel="shortcut icon" type="image/png" href="20241125_233804.png">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- For modern browsers -->
+<link rel="icon" type="image/png" sizes="32x32" href="20241125_233804.png">
+<link rel="icon" type="image/png" sizes="16x16" href="20241125_233804.png">
+
+<!-- For Apple devices -->
+<link rel="apple-touch-icon" href="20241125_233804.png">
+
+<!-- For IE/Edge -->
+<meta name="msapplication-TileImage" content="20241125_233804.png">
+<meta name="msapplication-TileColor" content="#4a2c5f">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <!-- html2canvas for image download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+   <style>
     /* Reset */
     * {
         margin: 0;
@@ -691,3 +716,745 @@
         }
     }
 </style>
+</head>
+<body>
+    <!-- Popup -->
+    <div class="popup-overlay" id="comingSoonPopup">
+        <div class="popup-container">
+            <div class="popup-icon"><i class="fas fa-hourglass-half"></i></div>
+            <h3>Coming Soon!</h3>
+            <p>We're working hard to bring you this feature. Stay tuned!</p>
+            <button class="popup-close" onclick="closePopup()">Got It</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" style="height:40px; width:auto; display:block;">
+                <span>MFMCF MEDILAG</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showComingSoon(event)">Home</a></li>
+                <li><a href="#" onclick="showComingSoon(event)">About</a></li>
+                <li><a href="#" onclick="showComingSoon(event)">Leadership</a></li>
+                <li><a href="#" onclick="showComingSoon(event)">Academics</a></li>
+                <li><a href="scriptural-cards.html" class="active">✨ Daily Word</a></li>
+            </ul>
+            <div class="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="cards-hero">
+        <div class="container">
+            <h1>🙏 Your Daily Word</h1>
+            <p>A fresh, personalized scripture just for you today</p>
+        </div>
+    </section>
+
+    <!-- Generator -->
+    <section style="padding: 40px 0;">
+        <div class="container">
+            <div class="generator-container">
+                <!-- Input -->
+                <div class="input-section">
+                    <h2>Get Your Daily Word</h2>
+                    <p>Enter your name and receive a unique scripture for today</p>
+                    
+                    <div class="daily-message" style="text-align:center; margin-bottom:20px;">
+                        <i class="fas fa-sun"></i> <span id="todayDate"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Your Name:</label>
+                        <input type="text" id="userName" value="Johnson">
+                        <button id="generateCardBtn" class="btn-generate">
+                            <i class="fas fa-wand-magic"></i> Get My Daily Word
+                        </button>
+                    </div>
+
+                    <div class="info-box" style="background:#f8f9fa; padding:10px; border-radius:10px;">
+                        <i class="fas fa-info-circle" style="color:#A020F0;"></i> 
+                        Come back tomorrow for a new word!
+                    </div>
+                </div>
+
+                <!-- Card Preview -->
+                <div>
+                    <h2>Today's Word For You</h2>
+                    <div class="card-preview-container">
+                        <div id="generatedCard" class="generated-card"></div>
+                    </div>
+
+                    <div class="download-options" id="downloadOptions" style="display: none;">
+                        <button id="downloadCardBtn" class="btn-download"><i class="fas fa-download"></i> Save Image</button>
+                        <button id="shareCardBtn" class="btn-share"><i class="fas fa-share-alt"></i> Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <script>
+    // Scripture Bank
+    const scriptureBank = [
+            // Help & Strength
+    { text: "you are helped by God", verse: "Psalm 121:2" },
+    { text: "the Lord is your helper", verse: "Hebrews 13:6" },
+    { text: "God is your refuge and strength", verse: "Psalm 46:1" },
+    { text: "you can do all things through Christ", verse: "Philippians 4:13" },
+    { text: "the Lord gives you wisdom", verse: "Proverbs 2:6" },
+    { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
+    { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
+    { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
+
+    // Wisdom & Understanding
+    { text: "if you lack wisdom, ask God who gives generously", verse: "James 1:5" },
+    { text: "the fear of the Lord is the beginning of wisdom", verse: "Proverbs 9:10" },
+    { text: "God gives you an understanding heart", verse: "1 Kings 3:12" },
+    { text: "your mind is renewed by the Spirit of God", verse: "Romans 12:2" },
+    { text: "God will instruct you and teach you the way to go", verse: "Psalm 32:8" },
+    { text: "the Lord makes your paths straight", verse: "Proverbs 3:6" },
+    { text: "you have the mind of Christ", verse: "1 Corinthians 2:16" },
+    { text: "God opens your understanding of the Scriptures", verse: "Luke 24:45" },
+    { text: "great is your peace because you are taught of the Lord", verse: "Isaiah 54:13" },
+    { text: "the Holy Spirit teaches you all things", verse: "John 14:26" },
+    { text: "God reveals deep and hidden things to you", verse: "Daniel 2:22" },
+    { text: "lean not on your own understanding", verse: "Proverbs 3:5" },
+
+    // Faith & Trust
+    { text: "faith is the substance of things hoped for", verse: "Hebrews 11:1" },
+    { text: "without faith it is impossible to please God", verse: "Hebrews 11:6" },
+    { text: "trust in the Lord with all your heart", verse: "Proverbs 3:5" },
+    { text: "your faith has made you whole", verse: "Mark 5:34" },
+    { text: "the just shall live by faith", verse: "Romans 1:17" },
+    { text: "you walk by faith and not by sight", verse: "2 Corinthians 5:7" },
+    { text: "God is faithful who has called you", verse: "1 Corinthians 1:9" },
+    { text: "nothing shall be impossible to those who believe", verse: "Mark 9:23" },
+    { text: "your faith moves mountains", verse: "Matthew 17:20" },
+    { text: "hold fast to the confession of your hope", verse: "Hebrews 10:23" },
+
+    // Love for God
+    { text: "love the Lord your God with all your heart", verse: "Matthew 22:37" },
+    { text: "God so loved the world that He gave His only Son", verse: "John 3:16" },
+    { text: "we love Him because He first loved us", verse: "1 John 4:19" },
+    { text: "nothing can separate you from the love of God", verse: "Romans 8:38-39" },
+    { text: "God's love is poured into your heart by the Holy Spirit", verse: "Romans 5:5" },
+    { text: "abide in the love of Christ", verse: "John 15:9" },
+    { text: "the love of God surpasses all knowledge", verse: "Ephesians 3:19" },
+    { text: "delight yourself in the Lord", verse: "Psalm 37:4" },
+    { text: "taste and see that the Lord is good", verse: "Psalm 34:8" },
+    { text: "draw near to God and He will draw near to you", verse: "James 4:8" },
+
+    // Academic Success & Diligence
+    { text: "whatever you do, do it heartily as unto the Lord", verse: "Colossians 3:23" },
+    { text: "the diligent hand makes rich", verse: "Proverbs 10:4" },
+    { text: "commit your works to the Lord and your plans will succeed", verse: "Proverbs 16:3" },
+    { text: "study to show yourself approved unto God", verse: "2 Timothy 2:15" },
+    { text: "Daniel had wisdom and understanding ten times better", verse: "Daniel 1:20" },
+    { text: "God gives knowledge and skill to those who seek Him", verse: "Daniel 1:17" },
+    { text: "in all your getting, get understanding", verse: "Proverbs 4:7" },
+    { text: "apply your heart to instruction", verse: "Proverbs 23:12" },
+    { text: "the plans of the diligent lead to abundance", verse: "Proverbs 21:5" },
+    { text: "God blesses the work of your hands", verse: "Deuteronomy 28:12" },
+
+    // Peace & Freedom from Anxiety
+    { text: "God has not given you a spirit of fear, but of power", verse: "2 Timothy 1:7" },
+    { text: "the peace of God guards your heart and mind", verse: "Philippians 4:7" },
+    { text: "cast all your anxiety on Him for He cares for you", verse: "1 Peter 5:7" },
+    { text: "be anxious for nothing but pray about everything", verse: "Philippians 4:6" },
+    { text: "God keeps you in perfect peace when your mind is stayed on Him", verse: "Isaiah 26:3" },
+    { text: "do not be troubled, trust in God", verse: "John 14:1" },
+    { text: "the Lord will fight for you, you need only be still", verse: "Exodus 14:14" },
+    { text: "you have peace that the world cannot give", verse: "John 14:27" },
+    { text: "come to Jesus and He will give you rest", verse: "Matthew 11:28" },
+    { text: "God is bigger than every exam and every challenge", verse: "1 John 4:4" },
+
+    // Purpose & Identity
+    { text: "you are God's workmanship created for good works", verse: "Ephesians 2:10" },
+    { text: "God has plans to give you a future and a hope", verse: "Jeremiah 29:11" },
+    { text: "you are chosen, royal, and holy", verse: "1 Peter 2:9" },
+    { text: "God knew you before you were formed in the womb", verse: "Jeremiah 1:5" },
+    { text: "you are the light of the world", verse: "Matthew 5:14" },
+    { text: "you are more than a conqueror through Christ", verse: "Romans 8:37" },
+    { text: "God's gifts and calling on your life are irrevocable", verse: "Romans 11:29" },
+    { text: "you are a new creation in Christ Jesus", verse: "2 Corinthians 5:17" },
+    { text: "God completes the good work He began in you", verse: "Philippians 1:6" },
+    { text: "you are the head and not the tail", verse: "Deuteronomy 28:13" },
+
+    // Endurance & Perseverance
+    { text: "those who wait on the Lord renew their strength", verse: "Isaiah 40:31" },
+    { text: "run with endurance the race set before you", verse: "Hebrews 12:1" },
+    { text: "do not grow weary in doing good", verse: "Galatians 6:9" },
+    { text: "you will reap a harvest if you do not give up", verse: "Galatians 6:9" },
+    { text: "God strengthens you with power through His Spirit", verse: "Ephesians 3:16" },
+    { text: "be strong and courageous, do not be afraid", verse: "Joshua 1:9" },
+    { text: "God gives power to the faint", verse: "Isaiah 40:29" },
+    { text: "the testing of your faith produces endurance", verse: "James 1:3" },
+    { text: "I press on toward the goal for the prize of God", verse: "Philippians 3:14" },
+    { text: "you have overcome because greater is He in you", verse: "1 John 4:4" },
+
+    // Prayer & Seeking God
+    { text: "seek first the kingdom of God and all things will be added", verse: "Matthew 6:33" },
+    { text: "call to God and He will answer you", verse: "Jeremiah 33:3" },
+    { text: "ask and it will be given to you", verse: "Matthew 7:7" },
+    { text: "the Lord is near to all who call on Him", verse: "Psalm 145:18" },
+    { text: "pray without ceasing", verse: "1 Thessalonians 5:17" },
+    { text: "the effective prayer of a righteous person avails much", verse: "James 5:16" },
+    { text: "God hears your prayer and your cry", verse: "Psalm 34:17" },
+    { text: "before you call, God will answer", verse: "Isaiah 65:24" },
+    { text: "in the morning lay your requests before God", verse: "Psalm 5:3" },
+    { text: "delight in the Lord and He will give you the desires of your heart", verse: "Psalm 37:4" },
+
+    // God's Word & Guidance
+    { text: "God's word is a lamp to your feet and a light to your path", verse: "Psalm 119:105" },
+    { text: "God's word does not return to Him void", verse: "Isaiah 55:11" },
+    { text: "meditate on God's word day and night", verse: "Joshua 1:8" },
+    { text: "the word of God is living and active", verse: "Hebrews 4:12" },
+    { text: "hide God's word in your heart", verse: "Psalm 119:11" },
+    { text: "your steps are ordered by the Lord", verse: "Psalm 37:23" },
+    { text: "God guards the paths of the just", verse: "Proverbs 2:8" },
+    { text: "acknowledge God in all your ways and He directs your path", verse: "Proverbs 3:6" },
+    { text: "the entrance of God's word gives light", verse: "Psalm 119:130" },
+    { text: "God's Word keeps you from stumbling", verse: "Psalm 119:165" },
+    { text: "you are helped by God", verse: "Psalm 121:2" },
+            { text: "the Lord is your helper", verse: "Hebrews 13:6" },
+            { text: "God is your refuge and strength", verse: "Psalm 46:1" },
+            { text: "you can do all things through Christ", verse: "Philippians 4:13" },
+            { text: "the Lord gives you wisdom", verse: "Proverbs 2:6" },
+            { text: "you are fearfully and wonderfully made", verse: "Psalm 139:14" },
+            { text: "the Lord is with you wherever you go", verse: "Joshua 1:9" },
+            { text: "My grace is sufficient for you", verse: "2 Corinthians 12:9" },
+    // Calm Before & During Exams
+    { text: "you are not confused, for God is not the author of confusion", verse: "1 Corinthians 14:33" },
+    { text: "the Spirit of God gives you a sound mind", verse: "2 Timothy 1:7" },
+    { text: "do not be afraid, for God is with you in that exam hall", verse: "Isaiah 41:10" },
+    { text: "God has not given you a spirit of fear before this paper", verse: "2 Timothy 1:7" },
+    { text: "you shall not be put to shame, for God is your confidence", verse: "Psalm 25:3" },
+    { text: "the peace of God quiets every anxious thought in your mind", verse: "Philippians 4:7" },
+    { text: "you are still and you know that He is God", verse: "Psalm 46:10" },
+    { text: "God stills the storm in your mind to a whisper", verse: "Psalm 107:29" },
+    { text: "your heart is fixed and trusting in the Lord", verse: "Psalm 112:7" },
+    { text: "this exam cannot shake you, for you stand on solid ground", verse: "Matthew 7:25" },
+
+    // Recall & Retention
+    { text: "the Holy Spirit brings all things to your remembrance", verse: "John 14:26" },
+    { text: "God restores what you have learned and need to recall", verse: "Joel 2:25" },
+    { text: "your memory is sharp, for God renews your mind", verse: "Romans 12:2" },
+    { text: "what you have studied is sealed in your heart by the Spirit", verse: "John 6:27" },
+    { text: "God causes your mind to retain knowledge at the right time", verse: "Proverbs 2:1" },
+    { text: "nothing you have laboured to learn will be lost", verse: "1 Corinthians 15:58" },
+    { text: "God gives you recall as you sit before your paper", verse: "Psalm 32:8" },
+    { text: "your diligence in study is rewarded with clarity in the exam", verse: "Proverbs 21:5" },
+
+    // Wisdom in the Exam Hall
+    { text: "God gives you wisdom to answer wisely when it matters most", verse: "James 1:5" },
+    { text: "the Spirit of wisdom and understanding rests upon you", verse: "Isaiah 11:2" },
+    { text: "God teaches your hands to write and your mind to think", verse: "Psalm 144:1" },
+    { text: "as you open your paper, God opens the eyes of your understanding", verse: "Ephesians 1:18" },
+    { text: "you have insight beyond your years, as Daniel had", verse: "Daniel 1:20" },
+    { text: "God makes even difficult questions plain before you", verse: "Isaiah 45:2" },
+    { text: "the Spirit of God guides you into all truth during this exam", verse: "John 16:13" },
+    { text: "God gives you thoughts and ideas that exceed your preparation", verse: "Ephesians 3:20" },
+
+    // Hard Work & Preparation
+    { text: "your labour in study is not in vain in the Lord", verse: "1 Corinthians 15:58" },
+    { text: "commit your revision to the Lord and your plans will stand", verse: "Proverbs 16:3" },
+    { text: "the diligent student shall stand before greatness", verse: "Proverbs 22:29" },
+    { text: "God honours the work of your hands in the late-night hours", verse: "Deuteronomy 28:12" },
+    { text: "what you sow in study, you shall reap in results", verse: "Galatians 6:7" },
+    { text: "study as unto the Lord and He will crown your effort", verse: "Colossians 3:23" },
+    { text: "God rewards every sacrifice you made to prepare for this", verse: "Hebrews 6:10" },
+    { text: "the seed of diligence you planted will bear fruit", verse: "John 12:24" },
+
+    // Overcoming Fear & Doubt
+    { text: "fear of failure has no hold on you, for God is your confidence", verse: "Proverbs 3:26" },
+    { text: "you are not overwhelmed, for God upholds you with His hand", verse: "Isaiah 41:10" },
+    { text: "the enemy cannot steal your focus or your peace", verse: "John 10:10" },
+    { text: "you cast down every thought of failure and inadequacy", verse: "2 Corinthians 10:5" },
+    { text: "God has not brought you this far to abandon you", verse: "Philippians 1:6" },
+    { text: "you silence every voice of doubt with the word of God", verse: "Romans 10:17" },
+    { text: "you are not behind, for God redeems your time", verse: "Ephesians 5:16" },
+    { text: "this exam is not too hard, for nothing is too hard for your God", verse: "Jeremiah 32:27" },
+
+    // Identity & Confidence
+    { text: "you are equipped for every good academic work", verse: "2 Timothy 3:17" },
+    { text: "God created your mind with precision and purpose", verse: "Psalm 139:14" },
+    { text: "you carry the wisdom of God into that examination hall", verse: "1 Corinthians 1:30" },
+    { text: "you are a student crowned with God's favour", verse: "Psalm 5:12" },
+    { text: "your future is not determined by one paper but by God's plan", verse: "Jeremiah 29:11" },
+    { text: "God makes you excel and not merely pass", verse: "Daniel 6:3" },
+    { text: "you shine like a star among your peers, for God's light is in you", verse: "Philippians 2:15" },
+
+    // After the Exam — Trust & Surrender
+    { text: "after you have done all you can, trust God with the rest", verse: "Ephesians 6:13" },
+    { text: "cast the result of this exam upon God and He will sustain you", verse: "Psalm 55:22" },
+    { text: "God turns your efforts into distinction", verse: "Psalm 75:6-7" },
+    { text: "your result is in God's hands, and His hands are good", verse: "Psalm 31:15" },
+    { text: "God causes all things, even this exam, to work for your good", verse: "Romans 8:28" },
+    { text: "you leave that hall with peace, for the matter is settled with God", verse: "Isaiah 26:3" },
+
+    // Daily Devotion as a Student
+    { text: "seek God early and find Him as your strength for the day", verse: "Psalm 63:1" },
+    { text: "begin every study session with God and end it in His peace", verse: "Psalm 16:8" },
+    { text: "God is your portion and your prize above every certificate", verse: "Psalm 73:26" },
+    { text: "no degree satisfies like knowing Christ your Lord", verse: "Philippians 3:8" },
+    { text: "let God's word be the foundation beneath all your knowledge", verse: "Matthew 7:24" },
+    { text: "you succeed in school and in spirit, for God blesses both", verse: "3 John 1:2" },
+    { text: "you are a living testimony of what God can do with a willing student", verse: "1 Timothy 4:15" },
+
+    // Calm Before & During Exams
+    { text: "you are not confused, for God is not the author of confusion", verse: "1 Corinthians 14:33" },
+    { text: "the Spirit of God gives you a sound mind", verse: "2 Timothy 1:7" },
+    { text: "do not be afraid, for God is with you in that exam hall", verse: "Isaiah 41:10" },
+    { text: "God has not given you a spirit of fear before this paper", verse: "2 Timothy 1:7" },
+    { text: "you shall not be put to shame, for God is your confidence", verse: "Psalm 25:3" },
+    { text: "the peace of God quiets every anxious thought in your mind", verse: "Philippians 4:7" },
+    { text: "you are still and you know that He is God", verse: "Psalm 46:10" },
+    { text: "God stills the storm in your mind to a whisper", verse: "Psalm 107:29" },
+    { text: "your heart is fixed and trusting in the Lord", verse: "Psalm 112:7" },
+    { text: "this exam cannot shake you, for you stand on solid ground", verse: "Matthew 7:25" },
+
+    // Recall & Retention
+    { text: "the Holy Spirit brings all things to your remembrance", verse: "John 14:26" },
+    { text: "God restores what you have learned and need to recall", verse: "Joel 2:25" },
+    { text: "your memory is sharp, for God renews your mind", verse: "Romans 12:2" },
+    { text: "what you have studied is sealed in your heart by the Spirit", verse: "John 6:27" },
+    { text: "God causes your mind to retain knowledge at the right time", verse: "Proverbs 2:1" },
+    { text: "nothing you have laboured to learn will be lost", verse: "1 Corinthians 15:58" },
+    { text: "God gives you recall as you sit before your paper", verse: "Psalm 32:8" },
+    { text: "your diligence in study is rewarded with clarity in the exam", verse: "Proverbs 21:5" },
+
+    // Wisdom in the Exam Hall
+    { text: "God gives you wisdom to answer wisely when it matters most", verse: "James 1:5" },
+    { text: "the Spirit of wisdom and understanding rests upon you", verse: "Isaiah 11:2" },
+    { text: "God teaches your hands to write and your mind to think", verse: "Psalm 144:1" },
+    { text: "as you open your paper, God opens the eyes of your understanding", verse: "Ephesians 1:18" },
+    { text: "you have insight beyond your years, as Daniel had", verse: "Daniel 1:20" },
+    { text: "God makes even difficult questions plain before you", verse: "Isaiah 45:2" },
+    { text: "the Spirit of God guides you into all truth during this exam", verse: "John 16:13" },
+    { text: "God gives you thoughts and ideas that exceed your preparation", verse: "Ephesians 3:20" },
+
+    // Hard Work & Preparation
+    { text: "your labour in study is not in vain in the Lord", verse: "1 Corinthians 15:58" },
+    { text: "commit your revision to the Lord and your plans will stand", verse: "Proverbs 16:3" },
+    { text: "the diligent student shall stand before greatness", verse: "Proverbs 22:29" },
+    { text: "God honours the work of your hands in the late-night hours", verse: "Deuteronomy 28:12" },
+    { text: "what you sow in study, you shall reap in results", verse: "Galatians 6:7" },
+    { text: "study as unto the Lord and He will crown your effort", verse: "Colossians 3:23" },
+    { text: "God rewards every sacrifice you made to prepare for this", verse: "Hebrews 6:10" },
+    { text: "the seed of diligence you planted will bear fruit", verse: "John 12:24" },
+
+    // Overcoming Fear & Doubt
+    { text: "fear of failure has no hold on you, for God is your confidence", verse: "Proverbs 3:26" },
+    { text: "you are not overwhelmed, for God upholds you with His hand", verse: "Isaiah 41:10" },
+    { text: "the enemy cannot steal your focus or your peace", verse: "John 10:10" },
+    { text: "you cast down every thought of failure and inadequacy", verse: "2 Corinthians 10:5" },
+    { text: "God has not brought you this far to abandon you", verse: "Philippians 1:6" },
+    { text: "you silence every voice of doubt with the word of God", verse: "Romans 10:17" },
+    { text: "you are not behind, for God redeems your time", verse: "Ephesians 5:16" },
+    { text: "this exam is not too hard, for nothing is too hard for your God", verse: "Jeremiah 32:27" },
+
+    // Identity & Confidence
+    { text: "you are equipped for every good academic work", verse: "2 Timothy 3:17" },
+    { text: "God created your mind with precision and purpose", verse: "Psalm 139:14" },
+    { text: "you carry the wisdom of God into that examination hall", verse: "1 Corinthians 1:30" },
+    { text: "you are a student crowned with God's favour", verse: "Psalm 5:12" },
+    { text: "your future is not determined by one paper but by God's plan", verse: "Jeremiah 29:11" },
+    { text: "God makes you excel and not merely pass", verse: "Daniel 6:3" },
+    { text: "you shine like a star among your peers, for God's light is in you", verse: "Philippians 2:15" },
+
+    // After the Exam — Trust & Surrender
+    { text: "after you have done all you can, trust God with the rest", verse: "Ephesians 6:13" },
+    { text: "cast the result of this exam upon God and He will sustain you", verse: "Psalm 55:22" },
+    { text: "God turns your efforts into distinction", verse: "Psalm 75:6-7" },
+    { text: "your result is in God's hands, and His hands are good", verse: "Psalm 31:15" },
+    { text: "God causes all things, even this exam, to work for your good", verse: "Romans 8:28" },
+    { text: "you leave that hall with peace, for the matter is settled with God", verse: "Isaiah 26:3" },
+
+    // Daily Devotion as a Student
+    { text: "seek God early and find Him as your strength for the day", verse: "Psalm 63:1" },
+    { text: "begin every study session with God and end it in His peace", verse: "Psalm 16:8" },
+    { text: "God is your portion and your prize above every certificate", verse: "Psalm 73:26" },
+    { text: "no degree satisfies like knowing Christ your Lord", verse: "Philippians 3:8" },
+    { text: "let God's word be the foundation beneath all your knowledge", verse: "Matthew 7:24" },
+    { text: "you succeed in school and in spirit, for God blesses both", verse: "3 John 1:2" },
+    { text: "you are a living testimony of what God can do with a willing student", verse: "1 Timothy 4:15" },
+
+    ];
+
+    // Mobile menu
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Popup functions
+    function showComingSoon(event) {
+        event.preventDefault();
+        document.getElementById('comingSoonPopup').style.display = 'flex';
+        navMenu?.classList.remove('active');
+        hamburger?.classList.remove('active');
+    }
+
+    function closePopup() {
+        document.getElementById('comingSoonPopup').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        const popup = document.getElementById('comingSoonPopup');
+        if (event.target === popup) popup.style.display = 'none';
+    }
+
+    // Get today's date
+    function getTodayDate() {
+        return new Date().toLocaleDateString('en-US', { 
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
+        });
+    }
+
+    // Get scripture based on name
+    function getDailyScripture(name) {
+        const today = new Date().toDateString();
+        const hash = (name + today).split('').reduce((a, b) => {
+            a = ((a << 5) - a) + b.charCodeAt(0);
+            return a & a;
+        }, 0);
+        return scriptureBank[Math.abs(hash) % scriptureBank.length];
+    }
+
+    // Generate card
+    function generateCard(name) {
+        const scripture = getDailyScripture(name);
+        const today = getTodayDate();
+        
+        document.getElementById('generatedCard').innerHTML = `
+            <div class="scripture-card-personal" id="cardToDownload">
+                <div class="daily-badge">TODAY'S WORD</div>
+                
+                <div class="card-header">
+                    <div class="logo-title">
+                        <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo" style="display:block; width:45px; height:45px; object-fit:contain;">
+                        <h2 class="fellowship-name">MFMCF MEDILAG</h2>
+                    </div>
+                    <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship</p>
+                </div>
+                
+                <div class="message-box">
+                    <p class="scripture-text">${name}, ${scripture.text}</p>
+                    <p class="scripture-verse">— ${scripture.verse}</p>
+                </div>
+                
+                <div class="date-stamp">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>${today}</span>
+                </div>
+            </div>
+        `;
+        
+        // Show download options after card is generated
+        document.getElementById('downloadOptions').style.display = 'flex';
+    }
+
+    // Show blank card initially
+    function showBlankCard() {
+        const today = getTodayDate();
+        
+        document.getElementById('generatedCard').innerHTML = `
+            <div class="scripture-card-personal" style="opacity:0.9;">
+                <div class="daily-badge">TODAY'S WORD</div>
+                
+                <div class="card-header">
+                    <div class="logo-title">
+                        <img src="./20241125_233804.png" alt="MFMCF MEDILAG Logo" class="card-logo" style="display:block; width:45px; height:45px; object-fit:contain; opacity:0.7;">
+                        <h2 class="fellowship-name">MFMCF MEDILAG</h2>
+                    </div>
+                    <p class="subtitle">Mountain of Fire and Miracles Ministries<br>Campus Fellowship MEDILAG</p>
+                </div>
+                
+                <div class="message-box" style="background: linear-gradient(135deg, rgba(200,200,200,0.1), rgba(150,150,150,0.1));">
+                    <p class="scripture-text" style="color:#999;">Enter your name to receive your daily word</p>
+                    <p class="scripture-verse" style="color:#ccc; border-top-color:#ddd;">— Your personalized scripture will appear here</p>
+                </div>
+                
+                <div class="date-stamp">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>${today}</span>
+                </div>
+            </div>
+        `;
+        
+        // Hide download options for blank card
+        document.getElementById('downloadOptions').style.display = 'none';
+    }
+
+    // Initialize with blank card
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('todayDate').textContent = getTodayDate();
+        document.getElementById('userName').value = ''; // Empty input field
+        showBlankCard(); // Show blank card
+    });
+
+    // Generate button
+    document.getElementById('generateCardBtn').addEventListener('click', function() {
+        const name = document.getElementById('userName').value.trim();
+        if (!name) {
+            alert('Please enter your name!');
+            return;
+        }
+        generateCard(name);
+    });
+
+    // Enter key
+    document.getElementById('userName').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            document.getElementById('generateCardBtn').click();
+        }
+    });
+
+    // DOWNLOAD
+   // DOWNLOAD - FIXED SIZE (600x600)
+document.getElementById('downloadCardBtn').addEventListener('click', function() {
+    const card = document.getElementById('cardToDownload');
+    if (!card) {
+        alert('Please generate a card first!');
+        return;
+    }
+    
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+    btn.disabled = true;
+    
+    // Set fixed dimensions for the card
+    const originalWidth = card.style.width;
+    const originalMaxWidth = card.style.maxWidth;
+    
+    // Force a fixed size for download
+    card.style.width = '500px';
+    card.style.maxWidth = '500px';
+    card.style.height = 'auto';
+    card.style.margin = '0 auto';
+    
+    // Small delay to ensure styles apply
+    setTimeout(() => {
+        // Use html2canvas with fixed dimensions
+        html2canvas(card, {
+            width: 500,              // Fixed width
+            height: 600,              // Fixed height
+            scale: 2,                 // Higher quality
+            backgroundColor: '#ffffff',
+            logging: false,
+            allowTaint: true,
+            useCORS: true,
+            windowWidth: 500,
+            windowHeight: 600
+        }).then(canvas => {
+            // Create a new canvas with exact dimensions
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = 500;
+            finalCanvas.height = 600;
+            const ctx = finalCanvas.getContext('2d');
+            
+            // Draw white background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 500, 600);
+            
+            // Calculate scaling to fit the card in the canvas
+            const scaleX = 500 / canvas.width;
+            const scaleY = 600 / canvas.height;
+            const scale = Math.min(scaleX, scaleY);
+            
+            const x = (500 - canvas.width * scale) / 2;
+            const y = (600 - canvas.height * scale) / 2;
+            
+            // Draw the card image centered
+            ctx.drawImage(canvas, x, y, canvas.width * scale, canvas.height * scale);
+            
+            // Download
+            const link = document.createElement('a');
+            const name = document.getElementById('userName').value.trim() || 'Your';
+            link.download = `MFMCF-${name}-Daily-Word.png`;
+            link.href = finalCanvas.toDataURL('image/png');
+            link.click();
+            
+            // Restore original card styles
+            card.style.width = originalWidth;
+            card.style.maxWidth = originalMaxWidth;
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }).catch(error => {
+            console.error('Error:', error);
+            
+            // Restore original card styles
+            card.style.width = originalWidth;
+            card.style.maxWidth = originalMaxWidth;
+            
+            alert('Download failed. Please try again.');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }, 200);
+});
+
+// SHARE - WITH FIXED SIZE IMAGE
+document.getElementById('shareCardBtn').addEventListener('click', function() {
+    const name = document.getElementById('userName').value.trim();
+    if (!name) {
+        alert('Please enter your name first!');
+        return;
+    }
+    
+    const card = document.getElementById('cardToDownload');
+    if (!card) return;
+    
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing...';
+    btn.disabled = true;
+    
+    // Store original styles
+    const originalWidth = card.style.width;
+    const originalMaxWidth = card.style.maxWidth;
+    
+    // Force fixed size
+    card.style.width = '500px';
+    card.style.maxWidth = '500px';
+    
+    setTimeout(() => {
+        // Generate image with fixed dimensions
+        html2canvas(card, {
+            width: 500,
+            height: 600,
+            scale: 2,
+            backgroundColor: '#ffffff',
+            logging: false,
+            allowTaint: true,
+            useCORS: true,
+            windowWidth: 500,
+            windowHeight: 600
+        }).then(canvas => {
+            // Create fixed size canvas
+            const finalCanvas = document.createElement('canvas');
+            finalCanvas.width = 500;
+            finalCanvas.height = 600;
+            const ctx = finalCanvas.getContext('2d');
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 500, 600);
+            
+            const scaleX = 500 / canvas.width;
+            const scaleY = 600 / canvas.height;
+            const scale = Math.min(scaleX, scaleY);
+            
+            const x = (500 - canvas.width * scale) / 2;
+            const y = (600 - canvas.height * scale) / 2;
+            
+            ctx.drawImage(canvas, x, y, canvas.width * scale, canvas.height * scale);
+            
+            // Restore card styles
+            card.style.width = originalWidth;
+            card.style.maxWidth = originalMaxWidth;
+            
+            // Convert to blob for sharing
+            finalCanvas.toBlob(function(blob) {
+                if (!blob) {
+                    fallbackToTextShare(name);
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    return;
+                }
+                
+                const file = new File([blob], `MFMCF-${name}-Daily-Word.png`, { type: 'image/png' });
+                
+                // Try to share as image
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    navigator.share({
+                        title: `Daily Word for ${name}`,
+                        text: `Your daily word from MFMCF MEDILAG`,
+                        files: [file]
+                    }).catch(() => {
+                        fallbackToTextShare(name);
+                    }).finally(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    });
+                } else {
+                    // If can't share image, offer download
+                    if (confirm('Image sharing not supported. Would you like to download the image to share manually?')) {
+                        const link = document.createElement('a');
+                        link.download = `MFMCF-${name}-Daily-Word.png`;
+                        link.href = finalCanvas.toDataURL('image/png');
+                        link.click();
+                    } else {
+                        fallbackToTextShare(name);
+                    }
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            }, 'image/png');
+        }).catch(error => {
+            console.error('Error:', error);
+            card.style.width = originalWidth;
+            card.style.maxWidth = originalMaxWidth;
+            fallbackToTextShare(name);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    }, 200);
+});
+
+// Fallback text sharing
+function fallbackToTextShare(name) {
+    const scriptureText = document.querySelector('.scripture-text')?.textContent || '';
+    const verseText = document.querySelector('.scripture-verse')?.textContent || '';
+    const today = getTodayDate();
+    
+    const message = `✨ DAILY WORD FOR ${name.toUpperCase()} ✨\n📅 ${today}\n\n${scriptureText}\n${verseText}\n\nFrom MFMCF MEDILAG`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: `Daily Word for ${name}`,
+            text: message,
+        }).catch(() => {
+            copyToClipboard(message);
+        });
+    } else {
+        copyToClipboard(message);
+    }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        alert('✨ Daily word copied to clipboard!');
+    }).catch(() => {
+        prompt('Copy this message:', text);
+    });
+}
+    // Alternative share method for platforms that support images but not files
+    function shareImageViaDownload(name) {
+        const card = document.getElementById('cardToDownload');
+        html2canvas(card, {
+            scale: 2,
+            backgroundColor: '#ffffff'
+        }).then(canvas => {
+            // Create download link
+            const link = document.createElement('a');
+            link.download = `MFMCF-${name}-Daily-Word.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            
+            alert('Image downloaded! You can now share it manually.');
+        });
+    }
+</script>
+</body>
+</html>
