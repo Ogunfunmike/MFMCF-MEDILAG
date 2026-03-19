@@ -1394,3 +1394,113 @@ footer {
     font-weight: bold;
     text-transform: uppercase;
 }
+/* Coming Soon Popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.popup-container {
+    background: white;
+    border-radius: 24px;
+    padding: 30px 25px;
+    max-width: 350px;
+    width: 90%;
+    text-align: center;
+    animation: popIn 0.3s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.popup-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #A020F0, #4a2c5f);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.popup-icon i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.popup-container h3 {
+    color: #1a2b4c;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.popup-container p {
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.popup-close {
+    background: linear-gradient(135deg, #A020F0, #4a2c5f);
+    color: white;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.popup-close:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(160, 32, 240, 0.3);
+}
+
+/* Mobile responsive for popup */
+@media (max-width: 480px) {
+    .popup-container {
+        padding: 25px 20px;
+        width: 85%;
+    }
+    
+    .popup-icon {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .popup-icon i {
+        font-size: 2rem;
+    }
+    
+    .popup-container h3 {
+        font-size: 1.5rem;
+    }
+    
+    .popup-container p {
+        font-size: 0.95rem;
+    }
+}
