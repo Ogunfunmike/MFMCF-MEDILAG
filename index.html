@@ -34,33 +34,34 @@
     </a>
 
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <img src="20241125_233804.png" alt="MFMCF MEDILAG Logo">
-                <span>MFMCF MEDILAG</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="active">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#leadership">Leadership</a></li>
-                <li><a href="#units">Units</a></li>
-                <li><a href="#academics">Academics</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#sermons">Sermons</a></li>
-                <li><a href="#testimonies">Testimonies</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#prayer">Prayer</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="scriptural-cards.html" class="cards-nav-link">📖 Scriptural Cards</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+   <!-- Navigation -->
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            <img src="20241125_233804.png" alt="MFMCF MEDILAG Logo">
+            <span>MFMCF MEDILAG</span>
         </div>
-    </nav>
+        <ul class="nav-menu">
+            <li><a href="#" onclick="showComingSoon(event)">Home</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">About</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Leadership</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Units</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Academics</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Events</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Sermons</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Testimonies</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Gallery</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Prayer</a></li>
+            <li><a href="#" onclick="showComingSoon(event)">Contact</a></li>
+            <li><a href="scriptural-cards.html" class="cards-nav-link" onclick="event.stopPropagation();">📖 Scriptural Cards</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -868,5 +869,61 @@
     </footer>
 
     <script src="js/main.js"></script>
+
+<!-- Coming Soon Popup -->
+<div class="popup-overlay" id="comingSoonPopup">
+    <div class="popup-container">
+        <div class="popup-icon">
+            <i class="fas fa-hourglass-half"></i>
+        </div>
+        <h3>Coming Soon!</h3>
+        <p>We're working hard to bring you this feature. Stay tuned for updates!</p>
+        <button class="popup-close" onclick="closePopup()">Got It</button>
+    </div>
+</div>
+
+<script>
+// Popup functions
+function showComingSoon(event) {
+    event.preventDefault();
+    document.getElementById('comingSoonPopup').style.display = 'flex';
+    // Close mobile menu if open
+    document.querySelector('.nav-menu').classList.remove('active');
+    document.querySelector('.hamburger').classList.remove('active');
+}
+
+function closePopup() {
+    document.getElementById('comingSoonPopup').style.display = 'none';
+}
+
+// Close popup when clicking outside
+window.onclick = function(event) {
+    const popup = document.getElementById('comingSoonPopup');
+    if (event.target === popup) {
+        popup.style.display = 'none';
+    }
+}
+
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+});
+</script>
 </body>
 </html>
